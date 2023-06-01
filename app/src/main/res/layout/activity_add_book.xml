@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        tools:context=".activities.MainActivity">
+
+        <EditText
+            android:id="@+id/idEdtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Enter book title" />
+
+        <EditText
+            android:id="@+id/idEdtAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Enter author" />
+
+        <Spinner
+            android:id="@+id/idSpnCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <EditText
+            android:id="@+id/idEdtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Enter description"
+            android:minLines="5"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/idEdtPublisher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter publisher" />
+
+<!--            <EditText-->
+<!--                android:id="@+id/idEdtPublishedDate"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:hint="Enter published date"-->
+<!--                android:inputType="date" />-->
+
+            <Button
+                android:id="@+id/datePickerButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="JAN 01 2020"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                style="?android:spinnerStyle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                android:layout_marginTop="0dp"
+                android:onClick="openDatePicker"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/idEdtSeries"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter series" />
+
+            <EditText
+                android:id="@+id/idEdtVolume"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter volume" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/idEdtNumberOfPages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Enter number of pages"
+            android:inputType="number" />
+
+        <CheckBox
+            android:id="@+id/idChkBorrowed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Borrowed" />
+
+        <!--button for adding new course-->
+        <Button
+            android:id="@+id/idBtnAddBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Add Book"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+</ScrollView>

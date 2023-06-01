@@ -1,0 +1,143 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="40dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Author -->
+    <TextView
+        android:id="@+id/authorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:text="Author"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/authorTextView"
+        android:text="Description"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Series -->
+    <TextView
+        android:id="@+id/seriesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionTextView"
+        android:text="Series"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Volume -->
+    <TextView
+        android:id="@+id/volumeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionTextView"
+        android:layout_toRightOf="@id/seriesTextView"
+        android:text="Volume"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Category -->
+    <TextView
+        android:id="@+id/categoryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seriesTextView"
+        android:text="Category"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Published Date -->
+    <TextView
+        android:id="@+id/publishedDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryTextView"
+        android:text="Published Date"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Publisher -->
+    <TextView
+        android:id="@+id/publisherTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryTextView"
+        android:layout_toRightOf="@id/publishedDateTextView"
+        android:text="Publisher"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Number of Pages -->
+    <TextView
+        android:id="@+id/pagesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryTextView"
+        android:layout_toRightOf="@id/publisherTextView"
+        android:text="Number of Pages"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Borrowed -->
+    <TextView
+        android:id="@+id/borrowedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pagesTextView"
+        android:text="Borrowed"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Lent -->
+    <TextView
+        android:id="@+id/lentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pagesTextView"
+        android:layout_toRightOf="@id/borrowedTextView"
+        android:text="Lent"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <ImageButton
+        android:id="@+id/deleteBookButton"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/delete" />
+
+    <ImageButton
+        android:id="@+id/editBookButton"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_alignTop="@id/deleteBookButton"
+        android:layout_toStartOf="@id/deleteBookButton"
+        android:layout_marginEnd="-10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/edit" />
+
+</RelativeLayout>
