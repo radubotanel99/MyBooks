@@ -1,11 +1,18 @@
 package com.firstapp.app.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +29,8 @@ import com.firstapp.app.database.Database;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -35,6 +45,13 @@ public class AddBookActivity extends AppCompatActivity {
     private Button dateButton;
     private boolean isEditMode = false;
     private Book bookToEdit;
+
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    private ImageView bookImage;
+    private Button uploadImageButton;
+
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +69,7 @@ public class AddBookActivity extends AppCompatActivity {
         }
 
         setupAddBookButton();
+        setupUploadButton();
         initDatePicker();
         initDateButton();
 
@@ -72,6 +90,11 @@ public class AddBookActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) categorySpn.getAdapter();
         int position = adapter.getPosition(selectedCategory);
         categorySpn.setSelection(position);
+
+
+        byte[] image = bookToEdit.getImage();
+        Bitmap imageBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        bookImage.setImageBitmap(imageBitmap);
     }
 
     private void initializeViews() {
@@ -86,6 +109,8 @@ public class AddBookActivity extends AppCompatActivity {
         borrowedChk = findViewById(R.id.idChkBorrowed);
         addBookBtn = findViewById(R.id.idBtnAddBook);
         dateButton = findViewById(R.id.datePickerButton);
+        bookImage = findViewById(R.id.bookImage);
+        uploadImageButton = findViewById(R.id.uploadImageButton);
     }
 
     private void initializeDatabase() {
@@ -136,12 +161,22 @@ public class AddBookActivity extends AppCompatActivity {
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
 
+        Drawable drawable = bookImage.getDrawable();
+        Bitmap bitmap = null;
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            bitmap = bitmapDrawable.getBitmap();
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+
         if (isInputInvalid(title, author, publisher, category)) {
             Toast.makeText(AddBookActivity.this, "Please enter the book..", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed);
+        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imageBytes);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -170,6 +205,38 @@ public class AddBookActivity extends AppCompatActivity {
         resetFields();
 
         goToMyBooksActivity();
+    }
+
+    private void setupUploadButton() {
+        uploadImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                bookImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private int getNumberOfPages() {

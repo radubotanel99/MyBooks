@@ -59,6 +59,7 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
                 i.putExtra("pages", modal.getPages());
                 i.putExtra("isBorrowed", modal.isBorrowed());
                 i.putExtra("isLent", modal.isLent());
+                i.putExtra("image", modal.getImage());
 
                 context.startActivity(i);
             }

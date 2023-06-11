@@ -25,6 +25,8 @@
         android:id="@+id/goToMyBooksBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:textColor="#000000"
         android:layout_marginStart="158dp"
         android:layout_marginTop="522dp"
         android:layout_marginEnd="159dp"

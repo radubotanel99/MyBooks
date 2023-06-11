@@ -47,7 +47,7 @@ public class CategoryView extends RecyclerView.Adapter<CategoryView.ViewHolder>{
         db = new Database(context);
         Category modal = categoriesArrayList.get(position);
         holder.categoryNameTV.setText(modal.getName());
-        holder.idTVBooksNumber.setText(String.valueOf(db.booksNumber(modal.getName())));
+        holder.idTVBooksNumber.setText("Books: " + String.valueOf(db.booksNumber(modal.getName())));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,10 +94,7 @@ public class CategoryView extends RecyclerView.Adapter<CategoryView.ViewHolder>{
             super(itemView);
             categoryNameTV = itemView.findViewById(R.id.idTVCategoryName);
             idTVBooksNumber = itemView.findViewById(R.id.idTVBooksNumber);
-//
-//            db = new Database(context);
-//            int howManyBooksCategoryHas = db.booksNumber(categoryNameTV.getText().toString());
-//            idTVBooksNumber.setText(String.valueOf(howManyBooksCategoryHas));
+
         }
 
     }

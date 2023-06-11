@@ -8,10 +8,7 @@ import com.firstapp.app.objects.Author;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class BookManager {
 
@@ -29,7 +26,7 @@ public class BookManager {
     private static final String ISBN_COL = "isbn";
     private static final String BORROWED_COL = "borrowed";
     private static final String LENT_COL = "lent";
-
+    private static final String IMAGE_COL = "image";
     private static volatile BookManager INSTANCE = null;
 
     private BookManager() {}
@@ -61,6 +58,7 @@ public class BookManager {
                 + ISBN_COL + " TEXT, "
                 + BORROWED_COL + " INTEGER, "
                 + LENT_COL + " INTEGER, "
+                + IMAGE_COL + " BOLB, "
                 + "FOREIGN KEY (" + CATEGORY_COL + ") REFERENCES category (id) )";
     }
 
@@ -98,8 +96,9 @@ public class BookManager {
         if (null != cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))) {
             lent = (cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))).equals("0") ? false : true;
         }
+        byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow(IMAGE_COL));
 
-        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent);
+        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent, image);
     }
 
     private String getStringValue(Cursor cursor, String columnName) {
@@ -112,7 +111,7 @@ public class BookManager {
         db.delete(TABLE_NAME, "id=?", new String[]{String.valueOf(idBook)});
     }
 
-    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed) {
+    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, byte[] imageBytes) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
         values.put(AUTHOR_COL, author);
@@ -126,7 +125,7 @@ public class BookManager {
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, borrowed);
         values.put(LENT_COL, "");
-
+        values.put(IMAGE_COL, imageBytes);
         db.insert(TABLE_NAME, null, values);
     }
 
@@ -152,5 +151,10 @@ public class BookManager {
         values.put(LENT_COL, "");
 
         db.update(TABLE_NAME, values, "id=?", new String[]{String.valueOf(id)});
+    }
+
+    public void dropTable(SQLiteDatabase db) {
+//        db.execSQL("DELETE FROM " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 }

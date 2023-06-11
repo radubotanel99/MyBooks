@@ -23,6 +23,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db = getReadableDatabase();
         String qyeryCategoryTable = categoryManager.createTable();
         db.execSQL(qyeryCategoryTable);
 
@@ -32,7 +33,22 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        dropTables(sqLiteDatabase);
+        onCreate(sqLiteDatabase);
+    }
 
+    private void dropTables(SQLiteDatabase sqLiteDatabase) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        bookManager.dropTable(db);
+        categoryManager.dropTable(db);
+        db.close();
+    }
+
+    public void resetDatabase() {
+        SQLiteDatabase db = getWritableDatabase();
+        dropTables(db);
+        onCreate(db);
+        db.close();
     }
 
     public void addNewCategory(String categoryName) {
@@ -48,9 +64,9 @@ public class Database extends SQLiteOpenHelper {
 
     public void addNewBook(String title, String author, String publisher, String category,
                            String description, String series, String volume,
-                           String publishedDate, int numberOfPages, boolean borrowed) {
+                           String publishedDate, int numberOfPages, boolean borrowed, byte[] imageBytes) {
         SQLiteDatabase db = this.getReadableDatabase();
-        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed);
+        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imageBytes);
         db.close();
     }
 

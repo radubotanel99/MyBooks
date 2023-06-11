@@ -29,6 +29,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
     private String title, author, description, series, volume, category, publishedDate, publisher;
     private int pages;
     private boolean isBorrowed, isLent;
+    private byte[] image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
         pages = getIntent().getIntExtra("pages", 0);
         isBorrowed = getIntent().getBooleanExtra("isBorrowed", false);
         isLent = getIntent().getBooleanExtra("isLent", false);
+        image = getIntent().getByteArrayExtra("image");
     }
 
     private void displayBookInformation() {
@@ -118,7 +120,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
-                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, false);
+                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, false, image);
                 intent.putExtra("BOOK_TO_EDIT", bookToEdit);
                 startActivity(intent);
             }

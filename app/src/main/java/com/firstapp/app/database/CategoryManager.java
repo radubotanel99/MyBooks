@@ -87,4 +87,9 @@ public class CategoryManager {
 
         return count;
     }
+
+    public void dropTable(SQLiteDatabase db) {
+//        db.execSQL("DELETE FROM " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+    }
 }
