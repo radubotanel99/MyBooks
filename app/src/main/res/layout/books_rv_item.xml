@@ -12,50 +12,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        >
 
-        <TextView
-            android:id="@+id/idTVTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="Title"
-            android:textColor="@color/black" />
+        <!-- Left Side: Photo -->
+        <ImageView
+            android:id="@+id/idImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/no_image"
+            android:scaleType="centerCrop"
+        />
 
+        <!-- Right Side: Text -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/idTVTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Title"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                />
 
             <TextView
                 android:id="@+id/idTVAuthor"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:padding="3dp"
                 android:text="Author"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                />
 
             <TextView
                 android:id="@+id/idTVCategory"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:padding="3dp"
                 android:text="Category"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/idTVPublisher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="3dp"
-            android:text="Publisher"
-            android:textColor="@color/black" />
 
     </LinearLayout>
 

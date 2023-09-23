@@ -2,9 +2,12 @@ package com.firstapp.app.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import com.firstapp.app.R;
 import com.firstapp.app.activities.ViewOneBookActivity;
 import com.firstapp.app.objects.Book;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
@@ -38,8 +42,13 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
         Book modal = booksArrayList.get(position);
         holder.titleTV.setText(modal.getTitle());
         holder.authorTV.setText(modal.getAuthor().getName());
-        holder.publisherTV.setText(modal.getPublisher());
         holder.categoryTV.setText(modal.getCategory().getName());
+
+        if (null != modal.getImagePath() && !modal.getImagePath().equals("")) {
+            String imagePath = modal.getImagePath();
+            Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
+            holder.imageView.setImageBitmap(imageBitmap);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +81,15 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView titleTV, authorTV, publisherTV, categoryTV;
+        private TextView titleTV, authorTV, categoryTV;
+        private ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.idTVTitle);
             authorTV = itemView.findViewById(R.id.idTVAuthor);
-            publisherTV = itemView.findViewById(R.id.idTVPublisher);
             categoryTV = itemView.findViewById(R.id.idTVCategory);
+            imageView = itemView.findViewById(R.id.idImageView);
         }
     }
 }

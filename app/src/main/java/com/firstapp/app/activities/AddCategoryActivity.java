@@ -44,13 +44,13 @@ public class AddCategoryActivity extends AppCompatActivity {
                 Toast.makeText(AddCategoryActivity.this, "Category has been added.", Toast.LENGTH_SHORT).show();
                 categoryNameEdt.setText("");
 
-                goToCategoriesActivity();
+                goToAdministrationActivity();
             }
         });
     }
 
-    private void goToCategoriesActivity() {
-        Intent intent = new Intent(this, ViewCategoriesActivity.class);
+    private void goToAdministrationActivity() {
+        Intent intent = new Intent(this, AdministrationActivity.class);
         startActivity(intent);
     }
 }

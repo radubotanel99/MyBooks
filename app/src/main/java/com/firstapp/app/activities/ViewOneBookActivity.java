@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,19 +20,21 @@ import com.firstapp.app.objects.Author;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
+import java.io.File;
 import java.util.Date;
 
 public class ViewOneBookActivity extends AppCompatActivity {
     private TextView titleTextView, authorTextView, descriptionTextView, seriesTextView,
             volumeTextView, categoryTextView, publishedDateTextView, publisherTextView,
             pagesTextView, borrowTextView, lentTextView;
+    private ImageView bookImageView;
     private ImageButton deleteBookButton, editBookButton;
     private Database db = new Database(ViewOneBookActivity.this);
     private int idBook;
     private String title, author, description, series, volume, category, publishedDate, publisher;
     private int pages;
     private boolean isBorrowed, isLent;
-    private byte[] image;
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
         pagesTextView = findViewById(R.id.pagesTextView);
         borrowTextView = findViewById(R.id.borrowedTextView);
         lentTextView = findViewById(R.id.lentTextView);
+        bookImageView = findViewById(R.id.bookImageView);
         deleteBookButton = findViewById(R.id.deleteBookButton);
         editBookButton = findViewById(R.id.editBookButton);
     }
@@ -72,7 +78,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
         pages = getIntent().getIntExtra("pages", 0);
         isBorrowed = getIntent().getBooleanExtra("isBorrowed", false);
         isLent = getIntent().getBooleanExtra("isLent", false);
-        image = getIntent().getByteArrayExtra("image");
+        imagePath = getIntent().getStringExtra("image");
     }
 
     private void displayBookInformation() {
@@ -87,6 +93,11 @@ public class ViewOneBookActivity extends AppCompatActivity {
         pagesTextView.setText(pages == 0 ? "N/A" : String.valueOf(pages));
         borrowTextView.setText(isBorrowed ? "Borrowed" : "Not Borrowed");
         lentTextView.setText(isLent ? "Lent" : "Not Lent");
+
+        if (null != imagePath && !imagePath.equals("")) {
+            Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
+            bookImageView.setImageBitmap(imageBitmap);
+        }
     }
 
     private void setupDeleteButton() {
@@ -101,6 +112,10 @@ public class ViewOneBookActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         db.deleteBook(idBook);
+                        File imageFileToDelete = new File(imagePath);
+                        if (imageFileToDelete.exists()) {
+                            imageFileToDelete.delete();
+                        }
                         Toast.makeText(ViewOneBookActivity.this, "Book has been deleted", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(ViewOneBookActivity.this, ViewBooksActivity.class);
                         startActivity(i);
@@ -120,7 +135,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
-                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, false, image);
+                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, false, imagePath);
                 intent.putExtra("BOOK_TO_EDIT", bookToEdit);
                 startActivity(intent);
             }

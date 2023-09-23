@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,7 +28,8 @@ import com.firstapp.app.database.Database;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,9 +92,11 @@ public class AddBookActivity extends AppCompatActivity {
         categorySpn.setSelection(position);
 
 
-        byte[] image = bookToEdit.getImage();
-        Bitmap imageBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-        bookImage.setImageBitmap(imageBitmap);
+        String imagePath = bookToEdit.getImagePath();
+        if (null != imagePath) {
+            Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
+            bookImage.setImageBitmap(imageBitmap);
+        }
     }
 
     private void initializeViews() {
@@ -160,27 +162,20 @@ public class AddBookActivity extends AppCompatActivity {
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
-
         Drawable drawable = bookImage.getDrawable();
-        Bitmap bitmap = null;
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            bitmap = bitmapDrawable.getBitmap();
-        }
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-        byte[] imageBytes = outputStream.toByteArray();
+
+        String imagePath = addImageToFolder(drawable, title);
 
         if (isInputInvalid(title, author, publisher, category)) {
             Toast.makeText(AddBookActivity.this, "Please enter the book..", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imageBytes);
+        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
 
-        goToMyBooksActivity();
+        goToAdministrationActivity();
     }
 
     private void updateBook() {
@@ -194,17 +189,19 @@ public class AddBookActivity extends AppCompatActivity {
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
+        Drawable drawable = bookImage.getDrawable();
+        String imagePath = addImageToFolder(drawable, title);
 
         if (isInputInvalid(title, author, publisher, category)) {
             Toast.makeText(AddBookActivity.this, "Please enter the book..", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate, numberOfPages, borrowed);
+        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate, numberOfPages, borrowed, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been updated.", Toast.LENGTH_SHORT).show();
         resetFields();
 
-        goToMyBooksActivity();
+        goToAdministrationActivity();
     }
 
     private void setupUploadButton() {
@@ -265,8 +262,8 @@ public class AddBookActivity extends AppCompatActivity {
         borrowedChk.setChecked(false);
     }
 
-    private void goToMyBooksActivity() {
-        Intent intent = new Intent(this, ViewBooksActivity.class);
+    private void goToAdministrationActivity() {
+        Intent intent = new Intent(this, AdministrationActivity.class);
         startActivity(intent);
     }
 
@@ -348,5 +345,32 @@ public class AddBookActivity extends AppCompatActivity {
     public void openDatePicker(View view)
     {
         datePickerDialog.show();
+    }
+
+    public String addImageToFolder(Drawable drawable, String bookTitle) {
+        if (drawable == null) {
+            return "";
+        }
+        Bitmap bitmap = null;
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            bitmap = bitmapDrawable.getBitmap();
+        }
+        String directoryPath = getFilesDir() + "/books_Images/";
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String imageName = bookTitle + ".png";
+        File imageFile = new File(directory, imageName);
+        String imagePath = directoryPath + imageName;
+        try {
+            FileOutputStream fos = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imagePath;
     }
 }

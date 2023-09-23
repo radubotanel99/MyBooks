@@ -1,7 +1,6 @@
 package com.firstapp.app.objects;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Book implements Serializable {
 
@@ -19,7 +18,7 @@ public class Book implements Serializable {
     private boolean borrowed;
     private boolean lent;
 
-    private byte[] image;
+    private String imagePath;
 
     public Book(int id, String title, Author author, String publisher, Category category) {
         this.id = id;
@@ -29,7 +28,7 @@ public class Book implements Serializable {
         this.category = category;
     }
 
-    public Book(int id, String title, Author author, String description, String series, String volume, Category category, String publishedDate, String publisher, int pages, String ISBN, boolean borrowed, boolean lent, byte[] image) {
+    public Book(int id, String title, Author author, String description, String series, String volume, Category category, String publishedDate, String publisher, int pages, String ISBN, boolean borrowed, boolean lent, String imagePath) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -43,7 +42,7 @@ public class Book implements Serializable {
         this.ISBN = ISBN;
         this.borrowed = borrowed;
         this.lent = lent;
-        this.image = image;
+        this.imagePath = imagePath;
     }
 
     public int getId() {
@@ -150,11 +149,11 @@ public class Book implements Serializable {
         this.lent = lent;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

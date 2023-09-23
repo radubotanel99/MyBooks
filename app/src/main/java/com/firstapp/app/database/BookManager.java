@@ -58,7 +58,7 @@ public class BookManager {
                 + ISBN_COL + " TEXT, "
                 + BORROWED_COL + " INTEGER, "
                 + LENT_COL + " INTEGER, "
-                + IMAGE_COL + " BOLB, "
+                + IMAGE_COL + " TEXT, "
                 + "FOREIGN KEY (" + CATEGORY_COL + ") REFERENCES category (id) )";
     }
 
@@ -96,9 +96,9 @@ public class BookManager {
         if (null != cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))) {
             lent = (cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))).equals("0") ? false : true;
         }
-        byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow(IMAGE_COL));
+        String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_COL));
 
-        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent, image);
+        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent, imagePath);
     }
 
     private String getStringValue(Cursor cursor, String columnName) {
@@ -111,7 +111,7 @@ public class BookManager {
         db.delete(TABLE_NAME, "id=?", new String[]{String.valueOf(idBook)});
     }
 
-    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, byte[] imageBytes) {
+    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, String imagePath) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
         values.put(AUTHOR_COL, author);
@@ -125,7 +125,7 @@ public class BookManager {
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, borrowed);
         values.put(LENT_COL, "");
-        values.put(IMAGE_COL, imageBytes);
+        values.put(IMAGE_COL, imagePath);
         db.insert(TABLE_NAME, null, values);
     }
 
@@ -133,7 +133,7 @@ public class BookManager {
                            String updatedCategory, String updatedDescription, String updatedSeries,
                            String updatedVolume, String updatedPublisher, String updatedPublishedDate,
                            int updatedPages,
-                           boolean updatedIsBorrowed) {
+                           boolean updatedIsBorrowed, String updatedImagePath) {
 
         ContentValues values = new ContentValues();
 
@@ -149,6 +149,7 @@ public class BookManager {
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, updatedIsBorrowed);
         values.put(LENT_COL, "");
+        values.put(IMAGE_COL, updatedImagePath);
 
         db.update(TABLE_NAME, values, "id=?", new String[]{String.valueOf(id)});
     }

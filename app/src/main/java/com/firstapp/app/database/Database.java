@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
@@ -44,13 +45,6 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void resetDatabase() {
-        SQLiteDatabase db = getWritableDatabase();
-        dropTables(db);
-        onCreate(db);
-        db.close();
-    }
-
     public void addNewCategory(String categoryName) {
         SQLiteDatabase db = this.getWritableDatabase();
         categoryManager.addNewCategory(categoryName, db);
@@ -64,9 +58,9 @@ public class Database extends SQLiteOpenHelper {
 
     public void addNewBook(String title, String author, String publisher, String category,
                            String description, String series, String volume,
-                           String publishedDate, int numberOfPages, boolean borrowed, byte[] imageBytes) {
+                           String publishedDate, int numberOfPages, boolean borrowed, String imagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
-        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imageBytes);
+        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imagePath);
         db.close();
     }
 
@@ -81,10 +75,10 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateBook(int id, String updatedTitle, String updatedAuthor, String category, String updatedDescription, String updatedSeries, String updatedVolume, String updatedPublisher, String updatedPublishedDate, int updatedPages, boolean updatedIsBorrowed) {
+    public void updateBook(int id, String updatedTitle, String updatedAuthor, String category, String updatedDescription, String updatedSeries, String updatedVolume, String updatedPublisher, String updatedPublishedDate, int updatedPages, boolean updatedIsBorrowed, String updatedImagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
         bookManager.updateBook(db, id, updatedTitle, updatedAuthor, category, updatedDescription, updatedSeries,
-                updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsBorrowed);
+                updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsBorrowed, updatedImagePath);
         db.close();
     }
 
@@ -107,5 +101,12 @@ public class Database extends SQLiteOpenHelper {
     public int booksNumber(String categoryName) {
         SQLiteDatabase db = this.getReadableDatabase();
         return categoryManager.booksNumber(db, categoryName);
+    }
+
+    public void resetDatabase() {
+        SQLiteDatabase db = getWritableDatabase();
+        dropTables(db);
+        onCreate(db);
+        db.close();
     }
 }
