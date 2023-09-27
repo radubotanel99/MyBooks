@@ -1,13 +1,21 @@
 package com.firstapp.app.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.firstapp.app.R;
+import com.journeyapps.barcodescanner.CaptureActivity;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class AdministrationActivity extends AppCompatActivity {
 
@@ -15,6 +23,7 @@ public class AdministrationActivity extends AppCompatActivity {
     private Button addBookBtn;
     private Button addCategoryBtn;
     private Button allCategoriesBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,6 @@ public class AdministrationActivity extends AppCompatActivity {
                 openViewCategoriesActivity();
             }
         });
-
     }
 
     public void openMyBooksActivity() {

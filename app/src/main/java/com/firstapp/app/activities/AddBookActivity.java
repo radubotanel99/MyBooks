@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -86,16 +87,26 @@ public class AddBookActivity extends AppCompatActivity {
         borrowedChk.setChecked(bookToEdit.isBorrowed());
 
         // Set selected category in the spinner
-        String selectedCategory = bookToEdit.getCategory().getName();
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) categorySpn.getAdapter();
-        int position = adapter.getPosition(selectedCategory);
-        categorySpn.setSelection(position);
-
+        if (null != bookToEdit.getCategory()) {
+            String selectedCategory = bookToEdit.getCategory().getName();
+            ArrayAdapter<String> adapter = (ArrayAdapter<String>) categorySpn.getAdapter();
+            int position = adapter.getPosition(selectedCategory);
+            categorySpn.setSelection(position);
+        }
 
         String imagePath = bookToEdit.getImagePath();
         if (null != imagePath) {
+            String tag = String.valueOf(this);
+            String message = "RADU" + imagePath.toString(); // Replace with your log message
+            Log.d(tag, message);
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
             bookImage.setImageBitmap(imageBitmap);
+            bookImage.setImageURI(Uri.parse(imagePath));
         }
     }
 
@@ -138,6 +149,10 @@ public class AddBookActivity extends AppCompatActivity {
             addBookBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (bookToEdit.getId() == 0) {
+                        addBook();
+                        return;
+                    }
                     updateBook();
                 }
             });
@@ -164,7 +179,13 @@ public class AddBookActivity extends AppCompatActivity {
         boolean borrowed = borrowedChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
 
-        String imagePath = addImageToFolder(drawable, title);
+        String imagePath = "";
+        if (!(null != bookToEdit && bookToEdit.getId() == 0)) {
+            imagePath = bookToEdit.getImagePath();
+            if (!(null != imagePath || !"".equals(imagePath))) {
+                imagePath = addImageToFolder(drawable, title);
+            }
+        }
 
         if (isInputInvalid(title, author, publisher, category)) {
             Toast.makeText(AddBookActivity.this, "Please enter the book..", Toast.LENGTH_SHORT).show();

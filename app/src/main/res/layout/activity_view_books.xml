@@ -31,6 +31,16 @@
         />
 
     <ImageButton
+        android:id="@+id/scanButton"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_margin="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/scanner"
+        app:layout_constraintBottom_toTopOf="@+id/addBookButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
         android:id="@+id/addBookButton"
         android:layout_width="62dp"
         android:layout_height="62dp"
@@ -39,6 +49,7 @@
         android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
