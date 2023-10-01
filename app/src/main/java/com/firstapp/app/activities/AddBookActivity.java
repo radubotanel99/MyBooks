@@ -40,6 +40,7 @@ public class AddBookActivity extends AppCompatActivity {
     private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, seriesEdt, volumeEdt, numberOfPagesEdt;
     private Spinner categorySpn;
     private CheckBox borrowedChk;
+    private CheckBox idChkLent;
     private Button addBookBtn;
     private Database db;
     private DatePickerDialog datePickerDialog;
@@ -85,6 +86,7 @@ public class AddBookActivity extends AppCompatActivity {
         volumeEdt.setText(bookToEdit.getVolume());
         numberOfPagesEdt.setText(String.valueOf(bookToEdit.getPages()));
         borrowedChk.setChecked(bookToEdit.isBorrowed());
+        idChkLent.setChecked(bookToEdit.isLent());
 
         // Set selected category in the spinner
         if (null != bookToEdit.getCategory()) {
@@ -97,7 +99,7 @@ public class AddBookActivity extends AppCompatActivity {
         String imagePath = bookToEdit.getImagePath();
         if (null != imagePath) {
             String tag = String.valueOf(this);
-            String message = "RADU" + imagePath.toString(); // Replace with your log message
+            String message = "RADU" + imagePath.toString();
             Log.d(tag, message);
             try {
                 Thread.sleep(4000);
@@ -120,6 +122,7 @@ public class AddBookActivity extends AppCompatActivity {
         volumeEdt = findViewById(R.id.idEdtVolume);
         numberOfPagesEdt = findViewById(R.id.idEdtNumberOfPages);
         borrowedChk = findViewById(R.id.idChkBorrowed);
+        idChkLent = findViewById(R.id.idChkLent);
         addBookBtn = findViewById(R.id.idBtnAddBook);
         dateButton = findViewById(R.id.datePickerButton);
         bookImage = findViewById(R.id.bookImage);
@@ -145,7 +148,6 @@ public class AddBookActivity extends AppCompatActivity {
 
     private void setupAddBookButton() {
         if (isEditMode) {
-            addBookBtn.setText("Update Book");
             addBookBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -177,22 +179,23 @@ public class AddBookActivity extends AppCompatActivity {
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
+        boolean lent = idChkLent.isChecked();
         Drawable drawable = bookImage.getDrawable();
 
         String imagePath = "";
-        if (!(null != bookToEdit && bookToEdit.getId() == 0)) {
+        if (null != bookToEdit) {
             imagePath = bookToEdit.getImagePath();
-            if (!(null != imagePath || !"".equals(imagePath))) {
-                imagePath = addImageToFolder(drawable, title);
-            }
+        }
+        if (null == imagePath || "".equals(imagePath)) {
+            imagePath = addImageToFolder(drawable, title);
         }
 
-        if (isInputInvalid(title, author, publisher, category)) {
-            Toast.makeText(AddBookActivity.this, "Please enter the book..", Toast.LENGTH_SHORT).show();
+        if (isInputInvalid(title, author, category)) {
+            Toast.makeText(AddBookActivity.this, "Title, author and category are mandatory fields!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imagePath);
+        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, lent, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -213,8 +216,8 @@ public class AddBookActivity extends AppCompatActivity {
         Drawable drawable = bookImage.getDrawable();
         String imagePath = addImageToFolder(drawable, title);
 
-        if (isInputInvalid(title, author, publisher, category)) {
-            Toast.makeText(AddBookActivity.this, "Please enter the book..", Toast.LENGTH_SHORT).show();
+        if (isInputInvalid(title, author, category)) {
+            Toast.makeText(AddBookActivity.this, "Title, author and category are mandatory fields!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -267,8 +270,8 @@ public class AddBookActivity extends AppCompatActivity {
         return numberOfPages;
     }
 
-    private boolean isInputInvalid(String title, String author, String publisher, String category) {
-        return title.isEmpty() || author.isEmpty() || publisher.isEmpty() || category.equals("Select category...");
+    private boolean isInputInvalid(String title, String author, String category) {
+        return title.isEmpty() || author.isEmpty() || category.equals("Select category...");
     }
 
     private void resetFields() {
@@ -308,7 +311,6 @@ public class AddBookActivity extends AppCompatActivity {
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-//        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
     }
 
     private String makeDateString(int day, int month, int year) {

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -63,6 +64,8 @@ public class ViewOneBookActivity extends AppCompatActivity {
         bookImageView = findViewById(R.id.bookImageView);
         deleteBookButton = findViewById(R.id.deleteBookButton);
         editBookButton = findViewById(R.id.editBookButton);
+
+        descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
     private void getBookDataFromIntent() {
@@ -85,12 +88,12 @@ public class ViewOneBookActivity extends AppCompatActivity {
         titleTextView.setText(title == null || title.isEmpty() ? "N/A" : title);
         authorTextView.setText(author == null || author.isEmpty() ? "N/A" : author);
         descriptionTextView.setText(description == null || description.isEmpty() ? "N/A" : description);
-        seriesTextView.setText(series == null || series.isEmpty() ? "N/A" : series);
-        volumeTextView.setText(volume == null || volume.isEmpty() ? "N/A" : volume);
-        categoryTextView.setText(category == null || category.isEmpty() ? "N/A" : category);
-        publishedDateTextView.setText(publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate);
-        publisherTextView.setText(publisher == null || publisher.isEmpty() ? "N/A" : publisher);
-        pagesTextView.setText(pages == 0 ? "N/A" : String.valueOf(pages));
+        seriesTextView.setText("Series: " + (series == null || series.isEmpty() ? "N/A" : series));
+        volumeTextView.setText("Volume: " + (volume == null || volume.isEmpty() ? "N/A" : volume));
+        categoryTextView.setText("Category: " + (category == null || category.isEmpty() ? "N/A" : category));
+        publishedDateTextView.setText("Published Date:\n" + (publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate));
+        publisherTextView.setText("Publisher:\n" + (publisher == null || publisher.isEmpty() ? "N/A" : publisher));
+        pagesTextView.setText("Nr of pages:\n" + (pages == 0 ? "N/A" : String.valueOf(pages)));
         borrowTextView.setText(isBorrowed ? "Borrowed" : "Not Borrowed");
         lentTextView.setText(isLent ? "Lent" : "Not Lent");
 

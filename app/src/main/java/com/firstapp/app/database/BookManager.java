@@ -111,7 +111,7 @@ public class BookManager {
         db.delete(TABLE_NAME, "id=?", new String[]{String.valueOf(idBook)});
     }
 
-    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, String imagePath) {
+    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, boolean lent, String imagePath) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
         values.put(AUTHOR_COL, author);
@@ -124,7 +124,7 @@ public class BookManager {
         values.put(PAGES_COL, numberOfPages);
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, borrowed);
-        values.put(LENT_COL, "");
+        values.put(LENT_COL, lent);
         values.put(IMAGE_COL, imagePath);
         db.insert(TABLE_NAME, null, values);
     }
@@ -157,5 +157,16 @@ public class BookManager {
     public void dropTable(SQLiteDatabase db) {
 //        db.execSQL("DELETE FROM " + TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+    }
+
+    public int getBooksNumber(SQLiteDatabase db) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        return count;
     }
 }

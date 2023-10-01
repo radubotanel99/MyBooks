@@ -33,6 +33,20 @@
             android:layout_marginTop="64dp"
             android:layout_marginBottom="16dp" />
 
+        <TextView
+            android:id="@+id/booksCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Books: 0"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="160dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/buttonsLayout"
             android:layout_width="match_parent"

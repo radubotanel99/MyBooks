@@ -3,11 +3,11 @@ package com.firstapp.app.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.TextView;
 
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
@@ -58,9 +58,9 @@ public class Database extends SQLiteOpenHelper {
 
     public void addNewBook(String title, String author, String publisher, String category,
                            String description, String series, String volume,
-                           String publishedDate, int numberOfPages, boolean borrowed, String imagePath) {
+                           String publishedDate, int numberOfPages, boolean borrowed, boolean lent, String imagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
-        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, imagePath);
+        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, lent, imagePath);
         db.close();
     }
 
@@ -108,5 +108,10 @@ public class Database extends SQLiteOpenHelper {
         dropTables(db);
         onCreate(db);
         db.close();
+    }
+
+    public int getBooksNUmber() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return bookManager.getBooksNumber(db);
     }
 }

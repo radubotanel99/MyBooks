@@ -11,8 +11,10 @@ import android.preference.DialogPreference;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.firstapp.app.R;
+import com.firstapp.app.database.Database;
 import com.journeyapps.barcodescanner.CaptureActivity;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -23,6 +25,9 @@ public class AdministrationActivity extends AppCompatActivity {
     private Button addBookBtn;
     private Button addCategoryBtn;
     private Button allCategoriesBtn;
+    private TextView booksCountTextView;
+    private Database db;
+
 
 
     @Override
@@ -61,6 +66,16 @@ public class AdministrationActivity extends AppCompatActivity {
                 openViewCategoriesActivity();
             }
         });
+
+        booksCountTextView = findViewById(R.id.booksCountTextView);
+        db = new Database(AdministrationActivity.this);
+        int booksNumber = db.getBooksNUmber();
+        if (booksNumber == 0 ) {
+            booksCountTextView.setText("You don't have any books yet.");
+        } else {
+            booksCountTextView.setText("You have " + String.valueOf(booksNumber) + (booksNumber == 1 ? " book," : " books,")  +  " congratulations!");
+        }
+
     }
 
     public void openMyBooksActivity() {

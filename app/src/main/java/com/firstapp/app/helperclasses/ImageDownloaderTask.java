@@ -33,7 +33,7 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Boolean> {
         String title = params[1];
         String isbn = params[2];
         String folderPath = context.getFilesDir() + "/books_Images/";
-        String fileName = title + isbn + ".png"; // Change the file name as needed
+        String fileName = title + isbn + ".png";
 
         try {
             URL url = new URL(imageUrl);

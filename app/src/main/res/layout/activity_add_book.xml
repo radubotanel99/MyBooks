@@ -62,6 +62,8 @@
             android:layout_margin="10dp"
             android:hint="Enter description"
             android:minLines="5"
+            android:maxLines="6"
+            android:isScrollContainer="true"
             android:inputType="textMultiLine" />
 
         <LinearLayout
@@ -76,14 +78,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Enter publisher" />
-
-<!--            <EditText-->
-<!--                android:id="@+id/idEdtPublishedDate"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:hint="Enter published date"-->
-<!--                android:inputType="date" />-->
 
             <Button
                 android:id="@+id/datePickerButton"
@@ -131,20 +125,34 @@
             android:hint="Enter number of pages"
             android:inputType="number" />
 
-        <CheckBox
-            android:id="@+id/idChkBorrowed"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Borrowed" />
+            android:orientation="horizontal">
 
+            <CheckBox
+                android:id="@+id/idChkBorrowed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Borrowed" />
+
+            <CheckBox
+                android:id="@+id/idChkLent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Lent" />
+
+        </LinearLayout>
         <!--button for adding new course-->
         <Button
             android:id="@+id/idBtnAddBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Add Book"
+            android:text="Save Book"
             android:textAllCaps="false" />
 
     </LinearLayout>
