@@ -26,6 +26,7 @@ public class BookManager {
     private static final String ISBN_COL = "isbn";
     private static final String BORROWED_COL = "borrowed";
     private static final String LENT_COL = "lent";
+    private static final String READ_COL = "read";
     private static final String IMAGE_COL = "image";
     private static volatile BookManager INSTANCE = null;
 
@@ -58,6 +59,7 @@ public class BookManager {
                 + ISBN_COL + " TEXT, "
                 + BORROWED_COL + " INTEGER, "
                 + LENT_COL + " INTEGER, "
+                + READ_COL + " INTEGER, "
                 + IMAGE_COL + " TEXT, "
                 + "FOREIGN KEY (" + CATEGORY_COL + ") REFERENCES category (id) )";
     }
@@ -96,9 +98,13 @@ public class BookManager {
         if (null != cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))) {
             lent = (cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))).equals("0") ? false : true;
         }
+        boolean read = false;
+        if (null != cursor.getString(cursor.getColumnIndexOrThrow(READ_COL))) {
+            read = (cursor.getString(cursor.getColumnIndexOrThrow(READ_COL))).equals("0") ? false : true;
+        }
         String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_COL));
 
-        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent, imagePath);
+        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent, read, imagePath);
     }
 
     private String getStringValue(Cursor cursor, String columnName) {
@@ -111,7 +117,9 @@ public class BookManager {
         db.delete(TABLE_NAME, "id=?", new String[]{String.valueOf(idBook)});
     }
 
-    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description, String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, boolean lent, String imagePath) {
+    public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description,
+                           String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, boolean lent,
+                           boolean read, String imagePath) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
         values.put(AUTHOR_COL, author);
@@ -125,6 +133,7 @@ public class BookManager {
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, borrowed);
         values.put(LENT_COL, lent);
+        values.put(READ_COL, read);
         values.put(IMAGE_COL, imagePath);
         db.insert(TABLE_NAME, null, values);
     }
@@ -133,7 +142,7 @@ public class BookManager {
                            String updatedCategory, String updatedDescription, String updatedSeries,
                            String updatedVolume, String updatedPublisher, String updatedPublishedDate,
                            int updatedPages,
-                           boolean updatedIsBorrowed, boolean updateIsLent, String updatedImagePath) {
+                           boolean updatedIsBorrowed, boolean updateIsLent, boolean updateIsRead, String updatedImagePath) {
 
         ContentValues values = new ContentValues();
 
@@ -149,6 +158,7 @@ public class BookManager {
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, updatedIsBorrowed);
         values.put(LENT_COL, updateIsLent);
+        values.put(READ_COL, updateIsRead);
         values.put(IMAGE_COL, updatedImagePath);
 
         db.update(TABLE_NAME, values, "id=?", new String[]{String.valueOf(id)});
@@ -161,6 +171,17 @@ public class BookManager {
 
     public int getBooksNumber(SQLiteDatabase db) {
         String query = "SELECT COUNT(*) FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        return count;
+    }
+
+    public int getBooksReadNumber(SQLiteDatabase db) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME  + " WHERE read=1";
         Cursor cursor = db.rawQuery(query, null);
         int count = 0;
         if (cursor.moveToFirst()) {

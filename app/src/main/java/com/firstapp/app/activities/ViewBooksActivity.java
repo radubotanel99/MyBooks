@@ -129,7 +129,7 @@ public class ViewBooksActivity extends AppCompatActivity {
                         String author = getAuthor(authorsArray);
 
                         Intent intent = new Intent(ViewBooksActivity.this, AddBookActivity.class);
-                        Book bookToEdit = new Book(0, title, new Author(author), description, series, volume, null, publishedDate, publisher, pageCount, isbn, false, false, imagePath);
+                        Book bookToEdit = new Book(0, title, new Author(author), description, series, volume, null, publishedDate, publisher, pageCount, isbn, false, false, false, imagePath);
                         intent.putExtra("BOOK_TO_EDIT", bookToEdit);
                         startActivity(intent);
                         break;

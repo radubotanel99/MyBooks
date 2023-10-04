@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        db.resetDatabase();
 //        deleteImages();
+//        db.alterDatabase();
 
         goToMyBooksBtn = (Button) findViewById(R.id.goToMyBooksBtn);
         goToMyBooksBtn.setOnClickListener(new View.OnClickListener() {

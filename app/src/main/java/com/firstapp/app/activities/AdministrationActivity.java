@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,10 +27,12 @@ public class AdministrationActivity extends AppCompatActivity {
     private Button addCategoryBtn;
     private Button allCategoriesBtn;
     private TextView booksCountTextView;
+    private TextView booksReadCountTextView;
     private Database db;
 
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,13 +71,26 @@ public class AdministrationActivity extends AppCompatActivity {
         });
 
         booksCountTextView = findViewById(R.id.booksCountTextView);
+        booksReadCountTextView = findViewById(R.id.booksReadCountTextView);
+
         db = new Database(AdministrationActivity.this);
+
         int booksNumber = db.getBooksNUmber();
         if (booksNumber == 0 ) {
             booksCountTextView.setText("You don't have any books yet.");
         } else {
-            booksCountTextView.setText("You have " + String.valueOf(booksNumber) + (booksNumber == 1 ? " book," : " books,")  +  " congratulations!");
+            booksCountTextView.setText("You have " + String.valueOf(booksNumber) + (booksNumber == 1 ? " book," : " books,")
+                    +  " congratulations!");
         }
+
+        int booksReadNumber = db.getBooksReadNumber();
+        if (booksReadNumber == 0) {
+            booksReadCountTextView.setText("You didn't read any of them yet.");
+        } else {
+            booksReadCountTextView.setText("You have read " + String.valueOf(booksReadNumber) + " of them until now.");
+        }
+
+
 
     }
 

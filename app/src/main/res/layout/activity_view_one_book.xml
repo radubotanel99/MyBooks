@@ -43,7 +43,7 @@
         android:layout_below="@id/authorTextView"
         android:text="Description"
         android:textColor="#000000"
-        android:maxLines="7"
+        android:maxLines="5"
         android:ellipsize="end"
         android:scrollbars="vertical"
         android:padding="16dp" />
@@ -129,6 +129,17 @@
         android:layout_below="@id/pagesTextView"
         android:layout_toRightOf="@id/borrowedTextView"
         android:text="Lent"
+        android:textColor="#000000"
+        android:padding="16dp" />
+
+    <!-- Lent -->
+    <TextView
+        android:id="@+id/readTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pagesTextView"
+        android:layout_toRightOf="@id/lentTextView"
+        android:text="Read"
         android:textColor="#000000"
         android:padding="16dp" />
 

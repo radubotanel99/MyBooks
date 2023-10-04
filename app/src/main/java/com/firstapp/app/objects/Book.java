@@ -17,7 +17,7 @@ public class Book implements Serializable {
     private String ISBN;
     private boolean borrowed;
     private boolean lent;
-
+    private boolean read;
     private String imagePath;
 
     public Book(int id, String title, Author author, String publisher, Category category) {
@@ -28,7 +28,9 @@ public class Book implements Serializable {
         this.category = category;
     }
 
-    public Book(int id, String title, Author author, String description, String series, String volume, Category category, String publishedDate, String publisher, int pages, String ISBN, boolean borrowed, boolean lent, String imagePath) {
+    public Book(int id, String title, Author author, String description, String series, String volume, Category category,
+                String publishedDate, String publisher, int pages, String ISBN, boolean borrowed, boolean lent,
+                boolean read, String imagePath) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -42,6 +44,7 @@ public class Book implements Serializable {
         this.ISBN = ISBN;
         this.borrowed = borrowed;
         this.lent = lent;
+        this.read = read;
         this.imagePath = imagePath;
     }
 
@@ -147,6 +150,14 @@ public class Book implements Serializable {
 
     public void setLent(boolean lent) {
         this.lent = lent;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
     }
 
     public String getImagePath() {

@@ -41,6 +41,7 @@ public class AddBookActivity extends AppCompatActivity {
     private Spinner categorySpn;
     private CheckBox borrowedChk;
     private CheckBox lentChk;
+    private CheckBox readChk;
     private Button addBookBtn;
     private Database db;
     private DatePickerDialog datePickerDialog;
@@ -87,6 +88,7 @@ public class AddBookActivity extends AppCompatActivity {
         numberOfPagesEdt.setText(String.valueOf(bookToEdit.getPages()));
         borrowedChk.setChecked(bookToEdit.isBorrowed());
         lentChk.setChecked(bookToEdit.isLent());
+        readChk.setChecked(bookToEdit.isRead());
 
         // Set selected category in the spinner
         if (null != bookToEdit.getCategory()) {
@@ -123,6 +125,7 @@ public class AddBookActivity extends AppCompatActivity {
         numberOfPagesEdt = findViewById(R.id.idEdtNumberOfPages);
         borrowedChk = findViewById(R.id.idChkBorrowed);
         lentChk = findViewById(R.id.idChkLent);
+        readChk = findViewById(R.id.idChkRead);
         addBookBtn = findViewById(R.id.idBtnAddBook);
         dateButton = findViewById(R.id.datePickerButton);
         bookImage = findViewById(R.id.bookImage);
@@ -180,6 +183,7 @@ public class AddBookActivity extends AppCompatActivity {
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
         boolean lent = lentChk.isChecked();
+        boolean read = readChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
 
         String imagePath = "";
@@ -194,7 +198,8 @@ public class AddBookActivity extends AppCompatActivity {
             return;
         }
 
-        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, lent, imagePath);
+        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages,
+                    borrowed, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -213,6 +218,7 @@ public class AddBookActivity extends AppCompatActivity {
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
         boolean lent = lentChk.isChecked();
+        boolean read = readChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
         String imagePath = addImageToFolder(drawable, title);
 
@@ -220,7 +226,8 @@ public class AddBookActivity extends AppCompatActivity {
             return;
         }
 
-        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate, numberOfPages, borrowed, lent, imagePath);
+        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate,
+                    numberOfPages, borrowed, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been updated.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -292,6 +299,7 @@ public class AddBookActivity extends AppCompatActivity {
         numberOfPagesEdt.setText("");
         borrowedChk.setChecked(false);
         lentChk.setChecked(false);
+        readChk.setChecked(false);
     }
 
     private void goToAdministrationActivity() {
