@@ -3,7 +3,6 @@ package com.firstapp.app.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.TextView;
 
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
@@ -75,10 +74,10 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateBook(int id, String updatedTitle, String updatedAuthor, String category, String updatedDescription, String updatedSeries, String updatedVolume, String updatedPublisher, String updatedPublishedDate, int updatedPages, boolean updatedIsBorrowed, String updatedImagePath) {
+    public void updateBook(int id, String updatedTitle, String updatedAuthor, String category, String updatedDescription, String updatedSeries, String updatedVolume, String updatedPublisher, String updatedPublishedDate, int updatedPages, boolean updatedIsBorrowed, boolean updateIsLent, String updatedImagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
         bookManager.updateBook(db, id, updatedTitle, updatedAuthor, category, updatedDescription, updatedSeries,
-                updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsBorrowed, updatedImagePath);
+                updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsBorrowed, updateIsLent, updatedImagePath);
         db.close();
     }
 

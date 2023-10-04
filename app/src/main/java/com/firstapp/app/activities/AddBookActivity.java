@@ -40,7 +40,7 @@ public class AddBookActivity extends AppCompatActivity {
     private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, seriesEdt, volumeEdt, numberOfPagesEdt;
     private Spinner categorySpn;
     private CheckBox borrowedChk;
-    private CheckBox idChkLent;
+    private CheckBox lentChk;
     private Button addBookBtn;
     private Database db;
     private DatePickerDialog datePickerDialog;
@@ -86,7 +86,7 @@ public class AddBookActivity extends AppCompatActivity {
         volumeEdt.setText(bookToEdit.getVolume());
         numberOfPagesEdt.setText(String.valueOf(bookToEdit.getPages()));
         borrowedChk.setChecked(bookToEdit.isBorrowed());
-        idChkLent.setChecked(bookToEdit.isLent());
+        lentChk.setChecked(bookToEdit.isLent());
 
         // Set selected category in the spinner
         if (null != bookToEdit.getCategory()) {
@@ -122,7 +122,7 @@ public class AddBookActivity extends AppCompatActivity {
         volumeEdt = findViewById(R.id.idEdtVolume);
         numberOfPagesEdt = findViewById(R.id.idEdtNumberOfPages);
         borrowedChk = findViewById(R.id.idChkBorrowed);
-        idChkLent = findViewById(R.id.idChkLent);
+        lentChk = findViewById(R.id.idChkLent);
         addBookBtn = findViewById(R.id.idBtnAddBook);
         dateButton = findViewById(R.id.datePickerButton);
         bookImage = findViewById(R.id.bookImage);
@@ -179,7 +179,7 @@ public class AddBookActivity extends AppCompatActivity {
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
-        boolean lent = idChkLent.isChecked();
+        boolean lent = lentChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
 
         String imagePath = "";
@@ -190,8 +190,7 @@ public class AddBookActivity extends AppCompatActivity {
             imagePath = addImageToFolder(drawable, title);
         }
 
-        if (isInputInvalid(title, author, category)) {
-            Toast.makeText(AddBookActivity.this, "Title, author and category are mandatory fields!", Toast.LENGTH_SHORT).show();
+        if (isInputInvalid(title, category)) {
             return;
         }
 
@@ -213,15 +212,15 @@ public class AddBookActivity extends AppCompatActivity {
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean borrowed = borrowedChk.isChecked();
+        boolean lent = lentChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
         String imagePath = addImageToFolder(drawable, title);
 
-        if (isInputInvalid(title, author, category)) {
-            Toast.makeText(AddBookActivity.this, "Title, author and category are mandatory fields!", Toast.LENGTH_SHORT).show();
+        if (isInputInvalid(title, category)) {
             return;
         }
 
-        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate, numberOfPages, borrowed, imagePath);
+        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate, numberOfPages, borrowed, lent, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been updated.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -270,8 +269,16 @@ public class AddBookActivity extends AppCompatActivity {
         return numberOfPages;
     }
 
-    private boolean isInputInvalid(String title, String author, String category) {
-        return title.isEmpty() || author.isEmpty() || category.equals("Select category...");
+    private boolean isInputInvalid(String title, String category) {
+        if (title.isEmpty()) {
+            Toast.makeText(AddBookActivity.this, "Please enter the title!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (category.isEmpty()) {
+            Toast.makeText(AddBookActivity.this, "Please enter category!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
     private void resetFields() {
@@ -284,6 +291,7 @@ public class AddBookActivity extends AppCompatActivity {
         volumeEdt.setText("");
         numberOfPagesEdt.setText("");
         borrowedChk.setChecked(false);
+        lentChk.setChecked(false);
     }
 
     private void goToAdministrationActivity() {

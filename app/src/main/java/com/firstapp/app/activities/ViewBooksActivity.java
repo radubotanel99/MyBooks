@@ -165,11 +165,15 @@ public class ViewBooksActivity extends AppCompatActivity {
     }
 
     private String savePhotoToDevice(JSONObject imageLinks, String title, String isbn) {
-        String imageUrl = imageLinks.optString("thumbnail");
-
-        //first parameter: imageUrl. Second: title. Third: isbn. If you don't respect the order it will crash
-        new ImageDownloaderTask(getApplicationContext()).execute(imageUrl, title, isbn);
-        return getFilesDir() + "/books_Images/" + title + isbn + ".png";
+        try {
+            String imageUrl = imageLinks.optString("thumbnail");
+            //first parameter: imageUrl. Second: title. Third: isbn. If you don't respect the order it will crash
+            new ImageDownloaderTask(getApplicationContext()).execute(imageUrl, title, isbn);
+            return getFilesDir() + "/books_Images/" + title + isbn + ".png";
+        } catch (NullPointerException e) {
+            //No photo for this book
+            return "";
+        }
     }
 
     private void alertDialogNoBookFound() {

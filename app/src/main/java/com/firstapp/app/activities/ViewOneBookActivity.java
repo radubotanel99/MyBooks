@@ -138,7 +138,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
-                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, false, imagePath);
+                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, isLent, imagePath);
                 intent.putExtra("BOOK_TO_EDIT", bookToEdit);
                 startActivity(intent);
             }

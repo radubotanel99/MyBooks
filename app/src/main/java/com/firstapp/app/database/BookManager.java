@@ -133,7 +133,7 @@ public class BookManager {
                            String updatedCategory, String updatedDescription, String updatedSeries,
                            String updatedVolume, String updatedPublisher, String updatedPublishedDate,
                            int updatedPages,
-                           boolean updatedIsBorrowed, String updatedImagePath) {
+                           boolean updatedIsBorrowed, boolean updateIsLent, String updatedImagePath) {
 
         ContentValues values = new ContentValues();
 
@@ -148,7 +148,7 @@ public class BookManager {
         values.put(PAGES_COL, updatedPages);
         values.put(ISBN_COL, "");
         values.put(BORROWED_COL, updatedIsBorrowed);
-        values.put(LENT_COL, "");
+        values.put(LENT_COL, updateIsLent);
         values.put(IMAGE_COL, updatedImagePath);
 
         db.update(TABLE_NAME, values, "id=?", new String[]{String.valueOf(id)});
