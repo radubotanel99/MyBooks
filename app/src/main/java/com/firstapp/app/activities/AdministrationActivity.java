@@ -73,7 +73,7 @@ public class AdministrationActivity extends AppCompatActivity {
         booksCountTextView = findViewById(R.id.booksCountTextView);
         booksReadCountTextView = findViewById(R.id.booksReadCountTextView);
 
-        db = new Database(AdministrationActivity.this);
+        db = Database.getInstance(AdministrationActivity.this);
 
         int booksNumber = db.getBooksNUmber();
         if (booksNumber == 0 ) {

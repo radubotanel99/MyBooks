@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.firstapp.app.activities.MainActivity;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
@@ -16,14 +17,26 @@ public class Database extends SQLiteOpenHelper {
 
     private CategoryManager categoryManager = CategoryManager.getInstance();
     private BookManager bookManager = BookManager.getInstance();
+    private static volatile Database INSTANCE = null;
 
     public Database(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+    public static Database getInstance(Context context) {
+        if(INSTANCE == null) {
+            synchronized (Database.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new Database(context);
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db = getReadableDatabase();
+//        db = getReadableDatabase();
         String qyeryCategoryTable = categoryManager.createTable();
         db.execSQL(qyeryCategoryTable);
 
@@ -108,19 +121,19 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void resetDatabase() {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         dropTables(db);
         onCreate(db);
         db.close();
     }
 
     public int getBooksNUmber() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         return bookManager.getBooksNumber(db);
     }
 
     public int getBooksReadNumber() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         return bookManager.getBooksReadNumber(db);
     }
 

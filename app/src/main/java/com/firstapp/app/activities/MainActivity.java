@@ -2,6 +2,7 @@ package com.firstapp.app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.CursorWindow;
 import android.os.Bundle;
@@ -17,14 +18,14 @@ import java.lang.reflect.Field;
 public class MainActivity extends AppCompatActivity {
 
     private Button goToMyBooksBtn;
-
-    private Database db = new Database(MainActivity.this);
+    private static Context context;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//        db = Database.getInstance(MainActivity.this);
 //        db.resetDatabase();
 //        deleteImages();
 //        db.alterDatabase();
@@ -36,11 +37,16 @@ public class MainActivity extends AppCompatActivity {
                 openAdministrationActivity();
             }
         });
+        MainActivity.context = getApplicationContext();
     }
 
     public void openAdministrationActivity() {
         Intent intent = new Intent(this, AdministrationActivity.class);
         startActivity(intent);
+    }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
     }
 
     private void deleteImages() {
