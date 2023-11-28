@@ -100,7 +100,7 @@ public class ViewBooksActivity extends AppCompatActivity {
     private void getBookInfo(String isbn) {
         mRequestQueue = Volley.newRequestQueue(ViewBooksActivity.this);
         mRequestQueue.getCache().clear();
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + isbn;
+        String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
         RequestQueue queue = Volley.newRequestQueue(ViewBooksActivity.this);
 
         JsonObjectRequest booksObjrequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

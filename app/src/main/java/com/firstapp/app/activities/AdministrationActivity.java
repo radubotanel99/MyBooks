@@ -26,11 +26,7 @@ public class AdministrationActivity extends AppCompatActivity {
     private Button addBookBtn;
     private Button addCategoryBtn;
     private Button allCategoriesBtn;
-    private TextView booksCountTextView;
-    private TextView booksReadCountTextView;
-    private Database db;
-
-
+    private Button statsBtn;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -70,28 +66,13 @@ public class AdministrationActivity extends AppCompatActivity {
             }
         });
 
-        booksCountTextView = findViewById(R.id.booksCountTextView);
-        booksReadCountTextView = findViewById(R.id.booksReadCountTextView);
-
-        db = Database.getInstance(AdministrationActivity.this);
-
-        int booksNumber = db.getBooksNUmber();
-        if (booksNumber == 0 ) {
-            booksCountTextView.setText("You don't have any books yet.");
-        } else {
-            booksCountTextView.setText("You have " + String.valueOf(booksNumber) + (booksNumber == 1 ? " book," : " books,")
-                    +  " congratulations!");
-        }
-
-        int booksReadNumber = db.getBooksReadNumber();
-        if (booksReadNumber == 0) {
-            booksReadCountTextView.setText("You didn't read any of them yet.");
-        } else {
-            booksReadCountTextView.setText("You have read " + String.valueOf(booksReadNumber) + " of them until now.");
-        }
-
-
-
+        statsBtn = (Button) findViewById(R.id.statsBtn);
+        statsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openStatsActivity();
+            }
+        });
     }
 
     public void openMyBooksActivity() {
@@ -111,6 +92,11 @@ public class AdministrationActivity extends AppCompatActivity {
 
     public void openViewCategoriesActivity() {
         Intent intent = new Intent(this, ViewCategoriesActivity.class);
+        startActivity(intent);
+    }
+
+    public void openStatsActivity() {
+        Intent intent = new Intent(this, StatsActivity.class);
         startActivity(intent);
     }
 

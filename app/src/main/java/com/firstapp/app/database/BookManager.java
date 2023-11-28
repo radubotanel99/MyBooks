@@ -181,7 +181,19 @@ public class BookManager {
     }
 
     public int getBooksReadNumber(SQLiteDatabase db) {
-        String query = "SELECT COUNT(*) FROM " + TABLE_NAME  + " WHERE read=1";
+        return getBooksWithPropertyNumber(db, READ_COL);
+    }
+
+    public int getBooksBorrowedNumber(SQLiteDatabase db) {
+        return getBooksWithPropertyNumber(db, BORROWED_COL);
+    }
+
+    public int getBooksLentNumber(SQLiteDatabase db) {
+        return getBooksWithPropertyNumber(db, LENT_COL);
+    }
+
+    private int getBooksWithPropertyNumber(SQLiteDatabase db, String colName) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME  + " WHERE " + colName + "=1";
         Cursor cursor = db.rawQuery(query, null);
         int count = 0;
         if (cursor.moveToFirst()) {

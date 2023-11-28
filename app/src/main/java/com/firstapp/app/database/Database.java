@@ -137,6 +137,16 @@ public class Database extends SQLiteOpenHelper {
         return bookManager.getBooksReadNumber(db);
     }
 
+    public int getBooksBorrowedNumber() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return bookManager.getBooksBorrowedNumber(db);
+    }
+
+    public int getBooksLentNumber() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return bookManager.getBooksLentNumber(db);
+    }
+
     public void alterDatabase() {
 //        SQLiteDatabase db = getWritableDatabase();
 //        String sql = "ALTER TABLE book ADD COLUMN read INTEGER DEFAULT 0;";
