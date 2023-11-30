@@ -1,5 +1,8 @@
 package com.firstapp.app.activities;
 
+
+import static com.firstapp.app.helperclasses.GeneralConstants.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -70,20 +73,20 @@ public class ViewOneBookActivity extends AppCompatActivity {
     }
 
     private void getBookDataFromIntent() {
-        idBook = getIntent().getIntExtra("id", 0);
-        title = getIntent().getStringExtra("title");
-        author = getIntent().getStringExtra("author");
-        description = getIntent().getStringExtra("description");
-        series = getIntent().getStringExtra("series");
-        volume = getIntent().getStringExtra("volume");
-        category = getIntent().getStringExtra("category");
-        publishedDate = getIntent().getStringExtra("publishedDate");
-        publisher = getIntent().getStringExtra("publisher");
-        pages = getIntent().getIntExtra("pages", 0);
-        isBorrowed = getIntent().getBooleanExtra("isBorrowed", false);
-        isLent = getIntent().getBooleanExtra("isLent", false);
-        isRead = getIntent().getBooleanExtra("isRead", false);
-        imagePath = getIntent().getStringExtra("image");
+        idBook = getIntent().getIntExtra(ID, 0);
+        title = getIntent().getStringExtra(TITLE);
+        author = getIntent().getStringExtra(AUTHOR);
+        description = getIntent().getStringExtra(DESCRIPTION);
+        series = getIntent().getStringExtra(SERIES);
+        volume = getIntent().getStringExtra(VOLUME);
+        category = getIntent().getStringExtra(CATEGORY);
+        publishedDate = getIntent().getStringExtra(PUBLISHED_DATE);
+        publisher = getIntent().getStringExtra(PUBLISHER);
+        pages = getIntent().getIntExtra(PAGE_COUNT, 0);
+        isBorrowed = getIntent().getBooleanExtra(IS_BORROWED, false);
+        isLent = getIntent().getBooleanExtra(IS_LENT, false);
+        isRead = getIntent().getBooleanExtra(IS_READ, false);
+        imagePath = getIntent().getStringExtra(IMAGE);
     }
 
     private void displayBookInformation() {
@@ -142,7 +145,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
                 Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, isLent, isRead, imagePath);
-                intent.putExtra("BOOK_TO_EDIT", bookToEdit);
+                intent.putExtra(BOOK_TO_EDIT, bookToEdit);
                 startActivity(intent);
             }
         });

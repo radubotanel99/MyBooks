@@ -65,7 +65,7 @@ public class BookManager {
     }
 
     public ArrayList<Book> allBooks(SQLiteDatabase db) {
-        Cursor cursorBooks = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursorBooks = db.rawQuery("SELECT * FROM " + TABLE_NAME + " order by " + TITLE_COL, null);
         ArrayList<Book> booksArrayList = new ArrayList<>();
 
         if (cursorBooks.moveToFirst()) {

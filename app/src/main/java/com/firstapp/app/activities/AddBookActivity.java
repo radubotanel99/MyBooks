@@ -1,5 +1,7 @@
 package com.firstapp.app.activities;
 
+import static com.firstapp.app.helperclasses.GeneralConstants.BOOK_TO_EDIT;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -65,9 +67,9 @@ public class AddBookActivity extends AppCompatActivity {
         initializeDatabase();
         initializeCategorySpinner();
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("BOOK_TO_EDIT")) {
+        if (intent != null && intent.hasExtra(BOOK_TO_EDIT)) {
             isEditMode = true;
-            bookToEdit = (Book) intent.getSerializableExtra("BOOK_TO_EDIT");
+            bookToEdit = (Book) intent.getSerializableExtra(BOOK_TO_EDIT);
             fillFieldsForEditMode();
         }
 
@@ -100,11 +102,8 @@ public class AddBookActivity extends AppCompatActivity {
 
         String imagePath = bookToEdit.getImagePath();
         if (null != imagePath) {
-            String tag = String.valueOf(this);
-            String message = "RADU" + imagePath.toString();
-            Log.d(tag, message);
             try {
-                Thread.sleep(4000);
+                Thread.sleep(4000); // it's needed to save the image first, then show in in view
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

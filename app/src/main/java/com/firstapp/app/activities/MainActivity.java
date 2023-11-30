@@ -25,10 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        db = Database.getInstance(MainActivity.this);
-//        db.resetDatabase();
-//        deleteImages();
-//        db.alterDatabase();
+
+//        databaseConfigurations(); //BE VERY CAREFUL!!!!!
 
         goToMyBooksBtn = (Button) findViewById(R.id.goToMyBooksBtn);
         goToMyBooksBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
         return MainActivity.context;
     }
 
+
+    private void databaseConfigurations() {
+        db = Database.getInstance(MainActivity.this);
+        db.resetDatabase();
+        deleteImages();
+        db.alterDatabase();
+    }
     private void deleteImages() {
         String folderPath = getFilesDir() + "/books_Images/";
         File folder = new File(folderPath);

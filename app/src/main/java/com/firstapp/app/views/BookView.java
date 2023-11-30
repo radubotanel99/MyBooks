@@ -1,5 +1,7 @@
 package com.firstapp.app.views;
 
+import static com.firstapp.app.helperclasses.GeneralConstants.*;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -56,20 +58,20 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
 
                 Intent i = new Intent(context, ViewOneBookActivity.class);
 
-                i.putExtra("id", modal.getId());
-                i.putExtra("title", modal.getTitle());
-                i.putExtra("author", modal.getAuthor().getName());
-                i.putExtra("description", modal.getDescription());
-                i.putExtra("series", modal.getSeries());
-                i.putExtra("volume", modal.getVolume());
-                i.putExtra("category", modal.getCategory().getName());
-                i.putExtra("publishedDate", modal.getPublishedDate());
-                i.putExtra("publisher", modal.getPublisher());
-                i.putExtra("pages", modal.getPages());
-                i.putExtra("isBorrowed", modal.isBorrowed());
-                i.putExtra("isLent", modal.isLent());
-                i.putExtra("isRead", modal.isRead());
-                i.putExtra("image", modal.getImagePath());
+                i.putExtra(ID, modal.getId());
+                i.putExtra(TITLE, modal.getTitle());
+                i.putExtra(AUTHOR, modal.getAuthor().getName());
+                i.putExtra(DESCRIPTION, modal.getDescription());
+                i.putExtra(SERIES, modal.getSeries());
+                i.putExtra(VOLUME, modal.getVolume());
+                i.putExtra(CATEGORY, modal.getCategory().getName());
+                i.putExtra(PUBLISHED_DATE, modal.getPublishedDate());
+                i.putExtra(PUBLISHER, modal.getPublisher());
+                i.putExtra(PAGE_COUNT, modal.getPages());
+                i.putExtra(IS_BORROWED, modal.isBorrowed());
+                i.putExtra(IS_LENT, modal.isLent());
+                i.putExtra(IS_READ, modal.isRead());
+                i.putExtra(IMAGE, modal.getImagePath());
                 context.startActivity(i);
             }
         });
