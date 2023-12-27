@@ -28,6 +28,9 @@ public class BookManager {
     private static final String LENT_COL = "lent";
     private static final String READ_COL = "read";
     private static final String IMAGE_COL = "image";
+    private static final String[] COLUMNS = {ID_COL, TITLE_COL, AUTHOR_COL, DESCRIPTION_COL, SERIES_COL, VOLUME_COL,
+        CATEGORY_COL, PUBLISHED_DATE_COL, PUBLISHER_COL, PAGES_COL, ISBN_COL, BORROWED_COL, LENT_COL, READ_COL,
+        IMAGE_COL};
     private static volatile BookManager INSTANCE = null;
 
     private BookManager() {}
@@ -199,7 +202,17 @@ public class BookManager {
         if (cursor.moveToFirst()) {
             count = cursor.getInt(0);
         }
-
         return count;
+    }
+
+    public Book getDuplicate(SQLiteDatabase db, String title, String author, String publisher, String publishedDate) {
+        Book book = null;
+        String selection = TITLE_COL + " = ? AND " + AUTHOR_COL + " = ? AND " + PUBLISHER_COL +  " = ? AND " + PUBLISHED_DATE_COL + " = ?";
+        String[] selectionArgs = {title, author, publisher, publishedDate};
+        Cursor cursor = db.query(TABLE_NAME, COLUMNS, selection, selectionArgs, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            book = createBookFromCursor(cursor);
+        }
+        return book;
     }
 }

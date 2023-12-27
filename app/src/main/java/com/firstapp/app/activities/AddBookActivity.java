@@ -1,6 +1,7 @@
 package com.firstapp.app.activities;
 
 import static com.firstapp.app.helperclasses.GeneralConstants.BOOK_TO_EDIT;
+import static com.firstapp.app.helperclasses.GeneralConstants.SELECT_CATEGORY;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -138,7 +139,7 @@ public class AddBookActivity extends AppCompatActivity {
     private void initializeCategorySpinner() {
         ArrayList<Category> categories = db.allCategories();
         ArrayList<String> dropDownCategories = new ArrayList<>();
-        dropDownCategories.add("Select category...");
+        dropDownCategories.add(SELECT_CATEGORY);
         for (Category cat : categories) {
             dropDownCategories.add(cat.getName());
         }
@@ -193,7 +194,7 @@ public class AddBookActivity extends AppCompatActivity {
             imagePath = addImageToFolder(drawable, title);
         }
 
-        if (isInputInvalid(title, category)) {
+        if (isInputInvalid(title, category, author, publisher, publishedDate)) {
             return;
         }
 
@@ -221,7 +222,7 @@ public class AddBookActivity extends AppCompatActivity {
         Drawable drawable = bookImage.getDrawable();
         String imagePath = addImageToFolder(drawable, title);
 
-        if (isInputInvalid(title, category)) {
+        if (isInputInvalid(title, category, author, publisher, publishedDate)) {
             return;
         }
 
@@ -275,13 +276,18 @@ public class AddBookActivity extends AppCompatActivity {
         return numberOfPages;
     }
 
-    private boolean isInputInvalid(String title, String category) {
+    private boolean isInputInvalid(String title, String category, String author, String publisher, String publishedDate) {
         if (title.isEmpty()) {
             Toast.makeText(AddBookActivity.this, "Please enter the title!", Toast.LENGTH_SHORT).show();
             return true;
         }
-        if (category.isEmpty()) {
+        if (category.isEmpty() || category.equals(SELECT_CATEGORY)) {
             Toast.makeText(AddBookActivity.this, "Please enter category!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (db.getDuplicate(title, author, publisher, publishedDate) != null) {
+            Toast.makeText(AddBookActivity.this, "You already have this book!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;

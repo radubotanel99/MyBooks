@@ -26,4 +26,6 @@ public class GeneralConstants {
     public static final String IS_LENT = "isLent";
     public static final String IS_READ = "isRead";
     public static final String IMAGE = "image";
+
+    public static final String SELECT_CATEGORY = "Select category...";
 }

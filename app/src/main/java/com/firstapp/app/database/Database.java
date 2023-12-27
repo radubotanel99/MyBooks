@@ -147,12 +147,15 @@ public class Database extends SQLiteOpenHelper {
         return bookManager.getBooksLentNumber(db);
     }
 
+    public Book getDuplicate(String title, String author, String publisher, String publishedDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return bookManager.getDuplicate(db, title, author, publisher, publishedDate);
+    }
+
     public void alterDatabase() {
 //        SQLiteDatabase db = getWritableDatabase();
 //        String sql = "ALTER TABLE book ADD COLUMN read INTEGER DEFAULT 0;";
 //        db.execSQL(sql);
 //        db.close();
     }
-
-
 }
