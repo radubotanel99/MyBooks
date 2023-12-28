@@ -102,11 +102,13 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/idEdtSeries"
+                android:id="@+id/idEdtCopies"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter series" />
+                android:hint="Enter nr of copies"
+                android:inputType="number"
+                android:text="1" />
 
             <EditText
                 android:id="@+id/idEdtVolume"

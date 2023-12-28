@@ -1,15 +1,5 @@
 package com.firstapp.app.helperclasses;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.widget.Button;
-
-import androidx.appcompat.app.ActionBar;
-
-import com.firstapp.app.R;
-import com.firstapp.app.activities.AdministrationActivity;
-
 public class GeneralConstants {
 
     public static final String ITEMS = "items";
@@ -21,7 +11,7 @@ public class GeneralConstants {
     public static final String DESCRIPTION = "description";
     public static final String PAGE_COUNT = "pageCount";
     public static final String VOLUME = "volume";
-    public static final String SERIES = "series";
+    public static final String COPIES = "copies";
     public static final String IMAGE_LINK = "imageLinks";
 
     public static final String BOOK_TO_EDIT = "BOOK_TO_EDIT";

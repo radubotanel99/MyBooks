@@ -4,7 +4,6 @@ import static com.firstapp.app.helperclasses.GeneralConstants.BOOK_TO_EDIT;
 import static com.firstapp.app.helperclasses.GeneralConstants.SELECT_CATEGORY;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -39,7 +38,7 @@ import java.util.Calendar;
 
 public class AddBookActivity extends AbstractActivity {
 
-    private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, seriesEdt, volumeEdt, numberOfPagesEdt;
+    private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, copiesEdt, volumeEdt, numberOfPagesEdt;
     private Spinner categorySpn;
     private CheckBox digitalChk;
     private CheckBox lentChk;
@@ -85,7 +84,7 @@ public class AddBookActivity extends AbstractActivity {
         authorEdt.setText(bookToEdit.getAuthor().getName());
         publisherEdt.setText(bookToEdit.getPublisher());
         descriptionEdt.setText(bookToEdit.getDescription());
-        seriesEdt.setText(bookToEdit.getSeries());
+        copiesEdt.setText(String.valueOf(bookToEdit.getCopies()));
         volumeEdt.setText(bookToEdit.getVolume());
         numberOfPagesEdt.setText(String.valueOf(bookToEdit.getPages()));
         digitalChk.setChecked(bookToEdit.isDigital());
@@ -119,7 +118,7 @@ public class AddBookActivity extends AbstractActivity {
         publisherEdt = findViewById(R.id.idEdtPublisher);
         categorySpn = findViewById(R.id.idSpnCategory);
         descriptionEdt = findViewById(R.id.idEdtDescription);
-        seriesEdt = findViewById(R.id.idEdtSeries);
+        copiesEdt = findViewById(R.id.idEdtCopies);
         volumeEdt = findViewById(R.id.idEdtVolume);
         numberOfPagesEdt = findViewById(R.id.idEdtNumberOfPages);
         digitalChk = findViewById(R.id.idChkDigital);
@@ -177,7 +176,7 @@ public class AddBookActivity extends AbstractActivity {
         String category = categorySpn.getSelectedItem().toString();
         String description = descriptionEdt.getText().toString();
         String publishedDate = dateButton.getText().toString();
-        String series = seriesEdt.getText().toString();
+        String copies = copiesEdt.getText().toString();
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean digital = digitalChk.isChecked();
@@ -193,11 +192,16 @@ public class AddBookActivity extends AbstractActivity {
             imagePath = addImageToFolder(drawable, title);
         }
 
-        if (isInputInvalid(title, category, author, publisher, publishedDate)) {
+        if (isInputInvalid(title, category)) {
             return;
         }
 
-        db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages,
+        if (db.getDuplicate(title, author, publisher, publishedDate) != null) {
+            Toast.makeText(AddBookActivity.this, "You already have this book!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.addNewBook(title, author, publisher, category, description, copies, volume, publishedDate, numberOfPages,
                     digital, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
@@ -212,7 +216,7 @@ public class AddBookActivity extends AbstractActivity {
         String category = categorySpn.getSelectedItem().toString();
         String description = descriptionEdt.getText().toString();
         String publishedDate = dateButton.getText().toString();
-        String series = seriesEdt.getText().toString();
+        String copies = copiesEdt.getText().toString();
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean digital = digitalChk.isChecked();
@@ -221,11 +225,11 @@ public class AddBookActivity extends AbstractActivity {
         Drawable drawable = bookImage.getDrawable();
         String imagePath = addImageToFolder(drawable, title);
 
-        if (isInputInvalid(title, category, author, publisher, publishedDate)) {
+        if (isInputInvalid(title, category)) {
             return;
         }
 
-        db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate,
+        db.updateBook(bookToEdit.getId(), title, author,category, description, copies, volume,  publisher, publishedDate,
                     numberOfPages, digital, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been updated.", Toast.LENGTH_SHORT).show();
         resetFields();
@@ -275,18 +279,13 @@ public class AddBookActivity extends AbstractActivity {
         return numberOfPages;
     }
 
-    private boolean isInputInvalid(String title, String category, String author, String publisher, String publishedDate) {
+    private boolean isInputInvalid(String title, String category) {
         if (title.isEmpty()) {
             Toast.makeText(AddBookActivity.this, "Please enter the title!", Toast.LENGTH_SHORT).show();
             return true;
         }
         if (category.isEmpty() || category.equals(SELECT_CATEGORY)) {
             Toast.makeText(AddBookActivity.this, "Please enter category!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        if (db.getDuplicate(title, author, publisher, publishedDate) != null) {
-            Toast.makeText(AddBookActivity.this, "You already have this book!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -298,7 +297,7 @@ public class AddBookActivity extends AbstractActivity {
         publisherEdt.setText("");
         categorySpn.setSelection(0);
         descriptionEdt.setText("");
-        seriesEdt.setText("");
+        copiesEdt.setText("");
         volumeEdt.setText("");
         numberOfPagesEdt.setText("");
         digitalChk.setChecked(false);

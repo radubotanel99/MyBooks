@@ -52,9 +52,9 @@ public class MainActivity extends AbstractActivity {
 
 
     private void databaseConfigurations() {
-//        Database db = Database.getInstance(MainActivity.this);
-//        db.resetDatabase();
-//        deleteImages();
+        Database db = Database.getInstance(MainActivity.this);
+        db.resetDatabase();
+        deleteImages();
 //        db.alterDatabase();
     }
     private void deleteImages() {

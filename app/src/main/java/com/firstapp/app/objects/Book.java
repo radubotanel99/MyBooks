@@ -8,7 +8,7 @@ public class Book implements Serializable {
     private String title;
     private Author author;
     private String description;
-    private String series;
+    private int copies;
     private String volume;
     private Category category;
     private String publishedDate;
@@ -28,14 +28,14 @@ public class Book implements Serializable {
         this.category = category;
     }
 
-    public Book(int id, String title, Author author, String description, String series, String volume, Category category,
+    public Book(int id, String title, Author author, String description, int copies, String volume, Category category,
                 String publishedDate, String publisher, int pages, String ISBN, boolean digital, boolean lent,
                 boolean read, String imagePath) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.description = description;
-        this.series = series;
+        this.copies = copies;
         this.volume = volume;
         this.category = category;
         this.publishedDate = publishedDate;
@@ -80,12 +80,12 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-    public String getSeries() {
-        return series;
+    public int getCopies() {
+        return copies;
     }
 
-    public void setSeries(String series) {
-        this.series = series;
+    public void setCopies(int copies) {
+        this.copies = copies;
     }
 
     public String getVolume() {

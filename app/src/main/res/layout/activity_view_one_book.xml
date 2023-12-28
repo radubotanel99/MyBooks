@@ -48,13 +48,13 @@
         android:scrollbars="vertical"
         android:padding="16dp" />
 
-    <!-- Series -->
+    <!-- Copies -->
     <TextView
-        android:id="@+id/seriesTextView"
+        android:id="@+id/copiesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionTextView"
-        android:text="Series"
+        android:text="Nr of copies"
         android:textColor="#000000"
         android:padding="16dp" />
 
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionTextView"
-        android:layout_toRightOf="@id/seriesTextView"
+        android:layout_toRightOf="@id/copiesTextView"
         android:text="Volume"
         android:textColor="#000000"
         android:padding="16dp" />
@@ -74,7 +74,7 @@
         android:id="@+id/categoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/seriesTextView"
+        android:layout_below="@id/copiesTextView"
         android:text="Category"
         android:textColor="#000000"
         android:padding="16dp" />

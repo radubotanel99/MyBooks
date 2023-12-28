@@ -99,5 +99,10 @@ public class AdministrationActivity extends AbstractActivity {
         Intent intent = new Intent(this, StatsActivity.class);
         startActivity(intent);
     }
+    @Override
+    public void openAdministrationActivity() {
+        int x = 2;
+        // we are here, nothing to do...
+    }
 
 }

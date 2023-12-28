@@ -9,7 +9,7 @@ import static com.firstapp.app.helperclasses.GeneralConstants.ITEMS;
 import static com.firstapp.app.helperclasses.GeneralConstants.PAGE_COUNT;
 import static com.firstapp.app.helperclasses.GeneralConstants.PUBLISHED_DATE;
 import static com.firstapp.app.helperclasses.GeneralConstants.PUBLISHER;
-import static com.firstapp.app.helperclasses.GeneralConstants.SERIES;
+import static com.firstapp.app.helperclasses.GeneralConstants.COPIES;
 import static com.firstapp.app.helperclasses.GeneralConstants.TITLE;
 import static com.firstapp.app.helperclasses.GeneralConstants.VOLUME;
 
@@ -66,7 +66,7 @@ public class GoogleAPIRequest {
                         String description = getPropertyFromJSON(volumeObj, DESCRIPTION);
                         int pageCount = volumeObj.optInt(PAGE_COUNT);
                         String volume = getPropertyFromJSON(volumeObj, VOLUME);
-                        String series = getPropertyFromJSON(volumeObj, SERIES);
+                        int copies = 1; // default
 
 
                         JSONObject imageLinks = volumeObj.optJSONObject(IMAGE_LINK);
@@ -77,7 +77,7 @@ public class GoogleAPIRequest {
                         String imagePath = savePhotoToDevice(imageLinks, title, isbn);
 
                         Intent intent = new Intent(context, AddBookActivity.class);
-                        Book bookToEdit = new Book(0, title, new Author(author), description, series, volume, null, publishedDate, publisher, pageCount, isbn, false, false, false, imagePath);
+                        Book bookToEdit = new Book(0, title, new Author(author), description, copies, volume, null, publishedDate, publisher, pageCount, isbn, false, false, false, imagePath);
                         intent.putExtra(BOOK_TO_EDIT, bookToEdit);
                         context.startActivity(intent);
                         break;

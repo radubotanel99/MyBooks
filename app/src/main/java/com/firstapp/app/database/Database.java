@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "library";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 7;
 
     private CategoryManager categoryManager = CategoryManager.getInstance();
     private BookManager bookManager = BookManager.getInstance();
@@ -45,12 +45,32 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            db.execSQL("CREATE TABLE new_table_name AS SELECT borrowed AS digital, id, title, author," +
-                    " description, series, volume, category, published_date, publisher, pages, isbn, " +
-                    " lent, read, image FROM book;");
-            db.execSQL("DROP TABLE book;");
-            db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+        switch (oldVersion) {
+            case 1:
+                db.execSQL("CREATE TABLE new_table_name AS SELECT id, title, author," +
+                        " description, series AS copies, volume, category, published_date, publisher, pages, isbn, " +
+                        " borrowed AS digital, lent, read, image FROM book;");
+                db.execSQL("DROP TABLE book;");
+                db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+                db.execSQL("UPDATE book SET copies=1");
+                break;
+
+            case 2:
+                db.execSQL("DELETE FROM book WHERE id is NULL");
+                db.execSQL("CREATE TABLE new_table_name AS SELECT id, title, author," +
+                        " description, series AS copies, volume, category, published_date, publisher, pages, isbn, " +
+                        " digital, lent, read, image FROM book;");
+                db.execSQL("DROP TABLE book;");
+                db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+                break;
+            case 6:
+                db.execSQL("DELETE FROM book WHERE id is NULL");
+                db.execSQL("CREATE TABLE new_table_name AS SELECT id, title, author," +
+                        " description, copies, volume, category, published_date, publisher, pages, isbn, " +
+                        " digital, lent, read, image FROM book;");
+                db.execSQL("DROP TABLE book;");
+                db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+                break;
         }
 //        dropTables(db);
 //        onCreate(db);
@@ -73,11 +93,11 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void addNewBook(String title, String author, String publisher, String category,
-                           String description, String series, String volume,
+                           String description, String copies, String volume,
                            String publishedDate, int numberOfPages, boolean digital, boolean lent,
                            boolean read, String imagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
-        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, digital, lent, read, imagePath);
+        bookManager.addNewBook(db, title, author, publisher, category, description, copies, volume, publishedDate, numberOfPages, digital, lent, read, imagePath);
         db.close();
     }
 
@@ -93,11 +113,11 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void updateBook(int id, String updatedTitle, String updatedAuthor, String category, String updatedDescription,
-                           String updatedSeries, String updatedVolume, String updatedPublisher, String updatedPublishedDate,
+                           String updatedCopies, String updatedVolume, String updatedPublisher, String updatedPublishedDate,
                            int updatedPages, boolean updatedIsDigital, boolean updateIsLent,
                            boolean updateIsRent, String updatedImagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
-        bookManager.updateBook(db, id, updatedTitle, updatedAuthor, category, updatedDescription, updatedSeries,
+        bookManager.updateBook(db, id, updatedTitle, updatedAuthor, category, updatedDescription, updatedCopies,
                 updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsDigital, updateIsLent,
                 updateIsRent, updatedImagePath);
         db.close();

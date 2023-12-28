@@ -3,8 +3,6 @@ package com.firstapp.app.activities;
 
 import static com.firstapp.app.helperclasses.GeneralConstants.*;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,15 +25,15 @@ import com.firstapp.app.objects.Category;
 import java.io.File;
 
 public class ViewOneBookActivity extends AbstractActivity {
-    private TextView titleTextView, authorTextView, descriptionTextView, seriesTextView,
+    private TextView titleTextView, authorTextView, descriptionTextView, copiesTextView,
             volumeTextView, categoryTextView, publishedDateTextView, publisherTextView,
             pagesTextView, digitalTextView, lentTextView, readTextView;
     private ImageView bookImageView;
     private ImageButton deleteBookButton, editBookButton;
     private Database db = new Database(ViewOneBookActivity.this);
     private int idBook;
-    private String title, author, description, series, volume, category, publishedDate, publisher;
-    private int pages;
+    private String title, author, description, volume, category, publishedDate, publisher;
+    private int copies, pages;
     private boolean isDigital, isLent, isRead;
     private String imagePath;
 
@@ -55,7 +53,7 @@ public class ViewOneBookActivity extends AbstractActivity {
         titleTextView = findViewById(R.id.titleTextView);
         authorTextView = findViewById(R.id.authorTextView);
         descriptionTextView = findViewById(R.id.descriptionTextView);
-        seriesTextView = findViewById(R.id.seriesTextView);
+        copiesTextView = findViewById(R.id.copiesTextView);
         volumeTextView = findViewById(R.id.volumeTextView);
         categoryTextView = findViewById(R.id.categoryTextView);
         publishedDateTextView = findViewById(R.id.publishedDateTextView);
@@ -76,7 +74,7 @@ public class ViewOneBookActivity extends AbstractActivity {
         title = getIntent().getStringExtra(TITLE);
         author = getIntent().getStringExtra(AUTHOR);
         description = getIntent().getStringExtra(DESCRIPTION);
-        series = getIntent().getStringExtra(SERIES);
+        copies = getIntent().getIntExtra(COPIES, 0);
         volume = getIntent().getStringExtra(VOLUME);
         category = getIntent().getStringExtra(CATEGORY);
         publishedDate = getIntent().getStringExtra(PUBLISHED_DATE);
@@ -92,7 +90,7 @@ public class ViewOneBookActivity extends AbstractActivity {
         titleTextView.setText(title == null || title.isEmpty() ? "N/A" : title);
         authorTextView.setText(author == null || author.isEmpty() ? "N/A" : author);
         descriptionTextView.setText(description == null || description.isEmpty() ? "N/A" : description);
-        seriesTextView.setText("Series: " + (series == null || series.isEmpty() ? "N/A" : series));
+        copiesTextView.setText("Nr of copies: " + copies);
         volumeTextView.setText("Volume: " + (volume == null || volume.isEmpty() ? "N/A" : volume));
         categoryTextView.setText("Category: " + (category == null || category.isEmpty() ? "N/A" : category));
         publishedDateTextView.setText("Published Date:\n" + (publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate));
@@ -143,7 +141,7 @@ public class ViewOneBookActivity extends AbstractActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
-                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume,
+                Book bookToEdit = new Book(idBook, title, new Author(author), description, copies, volume,
                         new Category(category), publishedDate, publisher, pages, "", isDigital,
                         isLent, isRead, imagePath);
                 intent.putExtra(BOOK_TO_EDIT, bookToEdit);
