@@ -111,13 +111,13 @@
         android:textColor="#000000"
         android:padding="16dp" />
 
-    <!-- Borrowed -->
+    <!-- Digital -->
     <TextView
-        android:id="@+id/borrowedTextView"
+        android:id="@+id/digitalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pagesTextView"
-        android:text="Borrowed"
+        android:text="eBook"
         android:textColor="#000000"
         android:padding="16dp" />
 
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pagesTextView"
-        android:layout_toRightOf="@id/borrowedTextView"
+        android:layout_toRightOf="@id/digitalTextView"
         android:text="Lent"
         android:textColor="#000000"
         android:padding="16dp" />

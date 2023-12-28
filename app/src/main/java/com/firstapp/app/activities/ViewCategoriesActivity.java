@@ -16,7 +16,7 @@ import com.firstapp.app.views.CategoryView;
 
 import java.util.ArrayList;
 
-public class ViewCategoriesActivity extends AppCompatActivity {
+public class ViewCategoriesActivity extends AbstractActivity {
 
     private ArrayList<Category> categoriesArrayList;
     private Database db;

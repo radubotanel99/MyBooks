@@ -24,12 +24,12 @@ public class BookManager {
     private static final String PUBLISHER_COL = "publisher";
     private static final String PAGES_COL = "pages";
     private static final String ISBN_COL = "isbn";
-    private static final String BORROWED_COL = "borrowed";
+    private static final String DIGITAL_COL = "digital";
     private static final String LENT_COL = "lent";
     private static final String READ_COL = "read";
     private static final String IMAGE_COL = "image";
     private static final String[] COLUMNS = {ID_COL, TITLE_COL, AUTHOR_COL, DESCRIPTION_COL, SERIES_COL, VOLUME_COL,
-        CATEGORY_COL, PUBLISHED_DATE_COL, PUBLISHER_COL, PAGES_COL, ISBN_COL, BORROWED_COL, LENT_COL, READ_COL,
+        CATEGORY_COL, PUBLISHED_DATE_COL, PUBLISHER_COL, PAGES_COL, ISBN_COL, DIGITAL_COL, LENT_COL, READ_COL,
         IMAGE_COL};
     private static volatile BookManager INSTANCE = null;
 
@@ -60,7 +60,7 @@ public class BookManager {
                 + PUBLISHER_COL + " TEXT, "
                 + PAGES_COL + " INTEGER, "
                 + ISBN_COL + " TEXT, "
-                + BORROWED_COL + " INTEGER, "
+                + DIGITAL_COL + " INTEGER, "
                 + LENT_COL + " INTEGER, "
                 + READ_COL + " INTEGER, "
                 + IMAGE_COL + " TEXT, "
@@ -93,9 +93,9 @@ public class BookManager {
         String publisher = getStringValue(cursor, PUBLISHER_COL);
         int numberOfPages = Integer.parseInt(getStringValue(cursor, PAGES_COL).equals("") ? "0" : getStringValue(cursor, PAGES_COL));
         String isbn = getStringValue(cursor, ISBN_COL);
-        boolean borrowed = false;
-        if (null != cursor.getString(cursor.getColumnIndexOrThrow(BORROWED_COL))) {
-            borrowed = (cursor.getString(cursor.getColumnIndexOrThrow(BORROWED_COL))).equals("0") ? false : true;
+        boolean digital = false;
+        if (null != cursor.getString(cursor.getColumnIndexOrThrow(DIGITAL_COL))) {
+            digital = (cursor.getString(cursor.getColumnIndexOrThrow(DIGITAL_COL))).equals("0") ? false : true;
         }
         boolean lent = false;
         if (null != cursor.getString(cursor.getColumnIndexOrThrow(LENT_COL))) {
@@ -107,7 +107,8 @@ public class BookManager {
         }
         String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_COL));
 
-        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher, numberOfPages, isbn, borrowed, lent, read, imagePath);
+        return new Book(id, title, author, description, series, volume, category, publishedDate, publisher,
+                numberOfPages, isbn, digital, lent, read, imagePath);
     }
 
     private String getStringValue(Cursor cursor, String columnName) {
@@ -121,7 +122,7 @@ public class BookManager {
     }
 
     public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description,
-                           String series, String volume, String publishedDate, int numberOfPages, boolean borrowed, boolean lent,
+                           String series, String volume, String publishedDate, int numberOfPages, boolean digital, boolean lent,
                            boolean read, String imagePath) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
@@ -134,7 +135,7 @@ public class BookManager {
         values.put(PUBLISHER_COL, publisher);
         values.put(PAGES_COL, numberOfPages);
         values.put(ISBN_COL, "");
-        values.put(BORROWED_COL, borrowed);
+        values.put(DIGITAL_COL, digital);
         values.put(LENT_COL, lent);
         values.put(READ_COL, read);
         values.put(IMAGE_COL, imagePath);
@@ -145,7 +146,7 @@ public class BookManager {
                            String updatedCategory, String updatedDescription, String updatedSeries,
                            String updatedVolume, String updatedPublisher, String updatedPublishedDate,
                            int updatedPages,
-                           boolean updatedIsBorrowed, boolean updateIsLent, boolean updateIsRead, String updatedImagePath) {
+                           boolean updatedIsDigital, boolean updateIsLent, boolean updateIsRead, String updatedImagePath) {
 
         ContentValues values = new ContentValues();
 
@@ -159,7 +160,7 @@ public class BookManager {
         values.put(PUBLISHER_COL, updatedPublisher);
         values.put(PAGES_COL, updatedPages);
         values.put(ISBN_COL, "");
-        values.put(BORROWED_COL, updatedIsBorrowed);
+        values.put(DIGITAL_COL, updatedIsDigital);
         values.put(LENT_COL, updateIsLent);
         values.put(READ_COL, updateIsRead);
         values.put(IMAGE_COL, updatedImagePath);
@@ -187,8 +188,8 @@ public class BookManager {
         return getBooksWithPropertyNumber(db, READ_COL);
     }
 
-    public int getBooksBorrowedNumber(SQLiteDatabase db) {
-        return getBooksWithPropertyNumber(db, BORROWED_COL);
+    public int getBooksDigitalNumber(SQLiteDatabase db) {
+        return getBooksWithPropertyNumber(db, DIGITAL_COL);
     }
 
     public int getBooksLentNumber(SQLiteDatabase db) {

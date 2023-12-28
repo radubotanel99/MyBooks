@@ -15,7 +15,7 @@ public class Book implements Serializable {
     private String publisher;
     private int pages;
     private String ISBN;
-    private boolean borrowed;
+    private boolean digital;
     private boolean lent;
     private boolean read;
     private String imagePath;
@@ -29,7 +29,7 @@ public class Book implements Serializable {
     }
 
     public Book(int id, String title, Author author, String description, String series, String volume, Category category,
-                String publishedDate, String publisher, int pages, String ISBN, boolean borrowed, boolean lent,
+                String publishedDate, String publisher, int pages, String ISBN, boolean digital, boolean lent,
                 boolean read, String imagePath) {
         this.id = id;
         this.title = title;
@@ -42,7 +42,7 @@ public class Book implements Serializable {
         this.publisher = publisher;
         this.pages = pages;
         this.ISBN = ISBN;
-        this.borrowed = borrowed;
+        this.digital = digital;
         this.lent = lent;
         this.read = read;
         this.imagePath = imagePath;
@@ -136,12 +136,12 @@ public class Book implements Serializable {
         this.ISBN = ISBN;
     }
 
-    public boolean isBorrowed() {
-        return borrowed;
+    public boolean isDigital() {
+        return digital;
     }
 
-    public void setBorrowed(boolean borrowed) {
-        this.borrowed = borrowed;
+    public void setDigital(boolean digital) {
+        this.digital = digital;
     }
 
     public boolean isLent() {

@@ -19,7 +19,6 @@ import com.firstapp.app.R;
 import com.firstapp.app.activities.ViewOneBookActivity;
 import com.firstapp.app.objects.Book;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
@@ -68,7 +67,7 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
                 i.putExtra(PUBLISHED_DATE, modal.getPublishedDate());
                 i.putExtra(PUBLISHER, modal.getPublisher());
                 i.putExtra(PAGE_COUNT, modal.getPages());
-                i.putExtra(IS_BORROWED, modal.isBorrowed());
+                i.putExtra(IS_DIGITAL, modal.isDigital());
                 i.putExtra(IS_LENT, modal.isLent());
                 i.putExtra(IS_READ, modal.isRead());
                 i.putExtra(IMAGE, modal.getImagePath());

@@ -16,7 +16,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,11 +37,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddBookActivity extends AppCompatActivity {
+public class AddBookActivity extends AbstractActivity {
 
     private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, seriesEdt, volumeEdt, numberOfPagesEdt;
     private Spinner categorySpn;
-    private CheckBox borrowedChk;
+    private CheckBox digitalChk;
     private CheckBox lentChk;
     private CheckBox readChk;
     private Button addBookBtn;
@@ -89,7 +88,7 @@ public class AddBookActivity extends AppCompatActivity {
         seriesEdt.setText(bookToEdit.getSeries());
         volumeEdt.setText(bookToEdit.getVolume());
         numberOfPagesEdt.setText(String.valueOf(bookToEdit.getPages()));
-        borrowedChk.setChecked(bookToEdit.isBorrowed());
+        digitalChk.setChecked(bookToEdit.isDigital());
         lentChk.setChecked(bookToEdit.isLent());
         readChk.setChecked(bookToEdit.isRead());
 
@@ -104,7 +103,7 @@ public class AddBookActivity extends AppCompatActivity {
         String imagePath = bookToEdit.getImagePath();
         if (null != imagePath) {
             try {
-                Thread.sleep(4000); // it's needed to save the image first, then show in in view
+                Thread.sleep(4000); // it's needed to save the image first, then show it in view
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -123,7 +122,7 @@ public class AddBookActivity extends AppCompatActivity {
         seriesEdt = findViewById(R.id.idEdtSeries);
         volumeEdt = findViewById(R.id.idEdtVolume);
         numberOfPagesEdt = findViewById(R.id.idEdtNumberOfPages);
-        borrowedChk = findViewById(R.id.idChkBorrowed);
+        digitalChk = findViewById(R.id.idChkDigital);
         lentChk = findViewById(R.id.idChkLent);
         readChk = findViewById(R.id.idChkRead);
         addBookBtn = findViewById(R.id.idBtnAddBook);
@@ -181,7 +180,7 @@ public class AddBookActivity extends AppCompatActivity {
         String series = seriesEdt.getText().toString();
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
-        boolean borrowed = borrowedChk.isChecked();
+        boolean digital = digitalChk.isChecked();
         boolean lent = lentChk.isChecked();
         boolean read = readChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
@@ -199,7 +198,7 @@ public class AddBookActivity extends AppCompatActivity {
         }
 
         db.addNewBook(title, author, publisher, category, description, series, volume, publishedDate, numberOfPages,
-                    borrowed, lent, read, imagePath);
+                    digital, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -216,7 +215,7 @@ public class AddBookActivity extends AppCompatActivity {
         String series = seriesEdt.getText().toString();
         String volume = volumeEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
-        boolean borrowed = borrowedChk.isChecked();
+        boolean digital = digitalChk.isChecked();
         boolean lent = lentChk.isChecked();
         boolean read = readChk.isChecked();
         Drawable drawable = bookImage.getDrawable();
@@ -227,7 +226,7 @@ public class AddBookActivity extends AppCompatActivity {
         }
 
         db.updateBook(bookToEdit.getId(), title, author,category, description, series, volume,  publisher, publishedDate,
-                    numberOfPages, borrowed, lent, read, imagePath);
+                    numberOfPages, digital, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been updated.", Toast.LENGTH_SHORT).show();
         resetFields();
 
@@ -302,7 +301,7 @@ public class AddBookActivity extends AppCompatActivity {
         seriesEdt.setText("");
         volumeEdt.setText("");
         numberOfPagesEdt.setText("");
-        borrowedChk.setChecked(false);
+        digitalChk.setChecked(false);
         lentChk.setChecked(false);
         readChk.setChecked(false);
     }

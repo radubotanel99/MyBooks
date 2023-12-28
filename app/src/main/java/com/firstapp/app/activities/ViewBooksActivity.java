@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ViewBooksActivity extends AppCompatActivity {
+public class ViewBooksActivity extends AbstractActivity {
 
     private ArrayList<Book> booksArrayList;
     private Database db;

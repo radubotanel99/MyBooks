@@ -1,7 +1,14 @@
 package com.firstapp.app.helperclasses;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.ActionBar;
+
+import com.firstapp.app.R;
+import com.firstapp.app.activities.AdministrationActivity;
 
 public class GeneralConstants {
 
@@ -22,7 +29,7 @@ public class GeneralConstants {
     public static final String ID = "id";
     public static final String AUTHOR = "author";
     public static final String CATEGORY = "category";
-    public static final String IS_BORROWED = "isBorrowed";
+    public static final String IS_DIGITAL = "isDigital";
     public static final String IS_LENT = "isLent";
     public static final String IS_READ = "isRead";
     public static final String IMAGE = "image";

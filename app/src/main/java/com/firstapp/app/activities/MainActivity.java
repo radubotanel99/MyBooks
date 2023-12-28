@@ -1,5 +1,6 @@
 package com.firstapp.app.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,19 +8,21 @@ import android.content.Intent;
 import android.database.CursorWindow;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.Toolbar;
 
 import com.firstapp.app.R;
 import com.firstapp.app.database.Database;
+import com.firstapp.app.helperclasses.GeneralConstants;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AbstractActivity {
 
     private Button goToMyBooksBtn;
     private static Context context;
-    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void databaseConfigurations() {
-        db = Database.getInstance(MainActivity.this);
-        db.resetDatabase();
-        deleteImages();
-        db.alterDatabase();
+//        Database db = Database.getInstance(MainActivity.this);
+//        db.resetDatabase();
+//        deleteImages();
+//        db.alterDatabase();
     }
     private void deleteImages() {
         String folderPath = getFilesDir() + "/books_Images/";

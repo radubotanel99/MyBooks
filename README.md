@@ -9,7 +9,7 @@ MyBooks is an application that allows users to organize better their books
 - [Contributing](#contributing)
 
 ## Introduction
-The My Book Library App is an Android application that allows users to easily manage their book library. Users can add new books, view existing books, edit book details, and delete books. The app provides features like categorizing books, tracking borrowing status, and maintaining a record of book details.
+The My Book Library App is an Android application that allows users to easily manage their book library. Users can add new books, view existing books, edit book details, and delete books. The app provides features like categorizing books, tracking lent status, and maintaining a record of book details.
 
 ## Features
 - Add new books to the library with title, author, publisher, category, description, and other details.
@@ -17,7 +17,7 @@ The My Book Library App is an Android application that allows users to easily ma
 - Edit book details including title, author, publisher, category, description, and other fields.
 - Delete books from the library.
 - Categorize books into different categories for easy organization.
-- Track borrowing status to know if a book is borrowed or available.
+- Track lent status to know if a book is lent to somebody or available.
 - Maintain a record of book details like series, volume, published date, and number of pages.
 
 ## Installation
@@ -48,7 +48,7 @@ Once the My Book Library App is installed, follow these steps to start using it:
 
 6. Use the category feature to organize your books into different categories.
 
-7. Track the borrowing status of books to know if they are borrowed or available.
+7. Track the lent status of books to know if they are lent to somebody or available.
 
 8. Enjoy managing your book library with ease using the My Book Library App!
 

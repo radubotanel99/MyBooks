@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.firstapp.app.activities.MainActivity;
 import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "library";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     private CategoryManager categoryManager = CategoryManager.getInstance();
     private BookManager bookManager = BookManager.getInstance();
@@ -45,16 +44,21 @@ public class Database extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        dropTables(sqLiteDatabase);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            db.execSQL("CREATE TABLE new_table_name AS SELECT borrowed AS digital, id, title, author," +
+                    " description, series, volume, category, published_date, publisher, pages, isbn, " +
+                    " lent, read, image FROM book;");
+            db.execSQL("DROP TABLE book;");
+            db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+        }
+//        dropTables(db);
+//        onCreate(db);
     }
 
-    private void dropTables(SQLiteDatabase sqLiteDatabase) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    private void dropTables(SQLiteDatabase db) {
         bookManager.dropTable(db);
         categoryManager.dropTable(db);
-        db.close();
     }
 
     public void addNewCategory(String categoryName) {
@@ -70,10 +74,10 @@ public class Database extends SQLiteOpenHelper {
 
     public void addNewBook(String title, String author, String publisher, String category,
                            String description, String series, String volume,
-                           String publishedDate, int numberOfPages, boolean borrowed, boolean lent,
+                           String publishedDate, int numberOfPages, boolean digital, boolean lent,
                            boolean read, String imagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
-        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, borrowed, lent, read, imagePath);
+        bookManager.addNewBook(db, title, author, publisher, category, description, series, volume, publishedDate, numberOfPages, digital, lent, read, imagePath);
         db.close();
     }
 
@@ -90,11 +94,11 @@ public class Database extends SQLiteOpenHelper {
 
     public void updateBook(int id, String updatedTitle, String updatedAuthor, String category, String updatedDescription,
                            String updatedSeries, String updatedVolume, String updatedPublisher, String updatedPublishedDate,
-                           int updatedPages, boolean updatedIsBorrowed, boolean updateIsLent,
+                           int updatedPages, boolean updatedIsDigital, boolean updateIsLent,
                            boolean updateIsRent, String updatedImagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
         bookManager.updateBook(db, id, updatedTitle, updatedAuthor, category, updatedDescription, updatedSeries,
-                updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsBorrowed, updateIsLent,
+                updatedVolume, updatedPublisher, updatedPublishedDate, updatedPages, updatedIsDigital, updateIsLent,
                 updateIsRent, updatedImagePath);
         db.close();
     }
@@ -137,9 +141,9 @@ public class Database extends SQLiteOpenHelper {
         return bookManager.getBooksReadNumber(db);
     }
 
-    public int getBooksBorrowedNumber() {
+    public int getBooksDigitalNumber() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return bookManager.getBooksBorrowedNumber(db);
+        return bookManager.getBooksDigitalNumber(db);
     }
 
     public int getBooksLentNumber() {

@@ -25,19 +25,18 @@ import com.firstapp.app.objects.Book;
 import com.firstapp.app.objects.Category;
 
 import java.io.File;
-import java.util.Date;
 
-public class ViewOneBookActivity extends AppCompatActivity {
+public class ViewOneBookActivity extends AbstractActivity {
     private TextView titleTextView, authorTextView, descriptionTextView, seriesTextView,
             volumeTextView, categoryTextView, publishedDateTextView, publisherTextView,
-            pagesTextView, borrowTextView, lentTextView, readTextView;
+            pagesTextView, digitalTextView, lentTextView, readTextView;
     private ImageView bookImageView;
     private ImageButton deleteBookButton, editBookButton;
     private Database db = new Database(ViewOneBookActivity.this);
     private int idBook;
     private String title, author, description, series, volume, category, publishedDate, publisher;
     private int pages;
-    private boolean isBorrowed, isLent, isRead;
+    private boolean isDigital, isLent, isRead;
     private String imagePath;
 
     @Override
@@ -62,7 +61,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
         publishedDateTextView = findViewById(R.id.publishedDateTextView);
         publisherTextView = findViewById(R.id.publisherTextView);
         pagesTextView = findViewById(R.id.pagesTextView);
-        borrowTextView = findViewById(R.id.borrowedTextView);
+        digitalTextView = findViewById(R.id.digitalTextView);
         lentTextView = findViewById(R.id.lentTextView);
         readTextView = findViewById(R.id.readTextView);
         bookImageView = findViewById(R.id.bookImageView);
@@ -83,7 +82,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
         publishedDate = getIntent().getStringExtra(PUBLISHED_DATE);
         publisher = getIntent().getStringExtra(PUBLISHER);
         pages = getIntent().getIntExtra(PAGE_COUNT, 0);
-        isBorrowed = getIntent().getBooleanExtra(IS_BORROWED, false);
+        isDigital = getIntent().getBooleanExtra(IS_DIGITAL, false);
         isLent = getIntent().getBooleanExtra(IS_LENT, false);
         isRead = getIntent().getBooleanExtra(IS_READ, false);
         imagePath = getIntent().getStringExtra(IMAGE);
@@ -99,7 +98,7 @@ public class ViewOneBookActivity extends AppCompatActivity {
         publishedDateTextView.setText("Published Date:\n" + (publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate));
         publisherTextView.setText("Publisher:\n" + (publisher == null || publisher.isEmpty() ? "N/A" : publisher));
         pagesTextView.setText("Nr of pages:\n" + (pages == 0 ? "N/A" : String.valueOf(pages)));
-        borrowTextView.setText(isBorrowed ? "Borrowed" : "Not Borrowed");
+        digitalTextView.setText(isDigital ? "eBook" : "Physical Book");
         lentTextView.setText(isLent ? "Lent" : "Not Lent");
         readTextView.setText(isRead ? "Read" : "Unread");
 
@@ -144,7 +143,9 @@ public class ViewOneBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
-                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume, new Category(category), publishedDate, publisher, pages, "", isBorrowed, isLent, isRead, imagePath);
+                Book bookToEdit = new Book(idBook, title, new Author(author), description, series, volume,
+                        new Category(category), publishedDate, publisher, pages, "", isDigital,
+                        isLent, isRead, imagePath);
                 intent.putExtra(BOOK_TO_EDIT, bookToEdit);
                 startActivity(intent);
             }

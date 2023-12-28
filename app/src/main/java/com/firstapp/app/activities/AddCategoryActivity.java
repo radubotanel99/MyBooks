@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.firstapp.app.R;
 import com.firstapp.app.database.Database;
 
-public class AddCategoryActivity extends AppCompatActivity {
+public class AddCategoryActivity extends AbstractActivity {
 
     private EditText categoryNameEdt;
     private Button addCategoryBtn;

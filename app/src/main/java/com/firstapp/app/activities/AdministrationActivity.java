@@ -20,7 +20,7 @@ import com.journeyapps.barcodescanner.CaptureActivity;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-public class AdministrationActivity extends AppCompatActivity {
+public class AdministrationActivity extends AbstractActivity {
 
     private Button myBooksBtn;
     private Button addBookBtn;
