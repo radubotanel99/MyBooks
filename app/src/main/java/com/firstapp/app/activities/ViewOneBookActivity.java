@@ -26,13 +26,13 @@ import java.io.File;
 
 public class ViewOneBookActivity extends AbstractActivity {
     private TextView titleTextView, authorTextView, descriptionTextView, copiesTextView,
-            volumeTextView, categoryTextView, publishedDateTextView, publisherTextView,
+            lentToTextView, categoryTextView, publishedDateTextView, publisherTextView,
             pagesTextView, digitalTextView, lentTextView, readTextView;
     private ImageView bookImageView;
     private ImageButton deleteBookButton, editBookButton;
     private Database db = new Database(ViewOneBookActivity.this);
     private int idBook;
-    private String title, author, description, volume, category, publishedDate, publisher;
+    private String title, author, description, lentTo, category, publishedDate, publisher;
     private int copies, pages;
     private boolean isDigital, isLent, isRead;
     private String imagePath;
@@ -54,7 +54,7 @@ public class ViewOneBookActivity extends AbstractActivity {
         authorTextView = findViewById(R.id.authorTextView);
         descriptionTextView = findViewById(R.id.descriptionTextView);
         copiesTextView = findViewById(R.id.copiesTextView);
-        volumeTextView = findViewById(R.id.volumeTextView);
+        lentToTextView = findViewById(R.id.lentToTextView);
         categoryTextView = findViewById(R.id.categoryTextView);
         publishedDateTextView = findViewById(R.id.publishedDateTextView);
         publisherTextView = findViewById(R.id.publisherTextView);
@@ -75,7 +75,7 @@ public class ViewOneBookActivity extends AbstractActivity {
         author = getIntent().getStringExtra(AUTHOR);
         description = getIntent().getStringExtra(DESCRIPTION);
         copies = getIntent().getIntExtra(COPIES, 0);
-        volume = getIntent().getStringExtra(VOLUME);
+        lentTo = getIntent().getStringExtra(LENT_TO);
         category = getIntent().getStringExtra(CATEGORY);
         publishedDate = getIntent().getStringExtra(PUBLISHED_DATE);
         publisher = getIntent().getStringExtra(PUBLISHER);
@@ -91,13 +91,18 @@ public class ViewOneBookActivity extends AbstractActivity {
         authorTextView.setText(author == null || author.isEmpty() ? "N/A" : author);
         descriptionTextView.setText(description == null || description.isEmpty() ? "N/A" : description);
         copiesTextView.setText("Nr of copies: " + copies);
-        volumeTextView.setText("Volume: " + (volume == null || volume.isEmpty() ? "N/A" : volume));
         categoryTextView.setText("Category: " + (category == null || category.isEmpty() ? "N/A" : category));
         publishedDateTextView.setText("Published Date:\n" + (publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate));
-        publisherTextView.setText("Publisher:\n" + (publisher == null || publisher.isEmpty() ? "N/A" : publisher));
-        pagesTextView.setText("Nr of pages:\n" + (pages == 0 ? "N/A" : String.valueOf(pages)));
+        publisherTextView.setText("Publisher:" + (publisher == null || publisher.isEmpty() ? "N/A" : publisher));
+        pagesTextView.setText("Nr of pages:" + (pages == 0 ? "N/A" : String.valueOf(pages)));
         digitalTextView.setText(isDigital ? "eBook" : "Physical Book");
         lentTextView.setText(isLent ? "Lent" : "Not Lent");
+        if (lentTextView.getText().equals("Lent")) {
+            lentToTextView.setText("Lent to: " + (lentTo == null || lentTo.isEmpty() ? "N/A" : lentTo));
+            lentToTextView.setVisibility(View.VISIBLE);
+        } else {
+            lentToTextView.setVisibility(View.GONE);
+        }
         readTextView.setText(isRead ? "Read" : "Unread");
 
         if (null != imagePath && !imagePath.equals("")) {
@@ -141,7 +146,7 @@ public class ViewOneBookActivity extends AbstractActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
-                Book bookToEdit = new Book(idBook, title, new Author(author), description, copies, volume,
+                Book bookToEdit = new Book(idBook, title, new Author(author), description, copies, lentTo,
                         new Category(category), publishedDate, publisher, pages, "", isDigital,
                         isLent, isRead, imagePath);
                 intent.putExtra(BOOK_TO_EDIT, bookToEdit);

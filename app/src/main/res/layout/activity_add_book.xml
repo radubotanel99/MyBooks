@@ -111,34 +111,19 @@
                 android:text="1" />
 
             <EditText
-                android:id="@+id/idEdtVolume"
-                android:layout_width="0dp"
+                android:id="@+id/idEdtNumberOfPages"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Enter volume" />
+                android:hint="Enter number of pages"
+                android:inputType="number" />
 
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/idEdtNumberOfPages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Enter number of pages"
-            android:inputType="number" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/idChkDigital"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="eBook" />
 
             <CheckBox
                 android:id="@+id/idChkLent"
@@ -148,6 +133,13 @@
                 android:text="Lent" />
 
             <CheckBox
+                android:id="@+id/idChkDigital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="eBook" />
+
+            <CheckBox
                 android:id="@+id/idChkRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,6 +147,17 @@
                 android:text="Read" />
 
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/idEdtLentTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="-20dp"
+            android:hint="Lent to..."
+            android:visibility="gone" />
+
         <!--button for adding new course-->
         <Button
             android:id="@+id/idBtnAddBook"

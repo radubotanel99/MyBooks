@@ -18,7 +18,7 @@ public class BookManager {
     private static final String AUTHOR_COL = "author";
     private static final String DESCRIPTION_COL = "description";
     private static final String COPIES_COL = "copies";
-    private static final String VOLUME_COL = "volume";
+    private static final String LENT_TO_COL = "lentTo";
     private static final String CATEGORY_COL = "category";
     private static final String PUBLISHED_DATE_COL = "published_date";
     private static final String PUBLISHER_COL = "publisher";
@@ -28,7 +28,7 @@ public class BookManager {
     private static final String LENT_COL = "lent";
     private static final String READ_COL = "read";
     private static final String IMAGE_COL = "image";
-    private static final String[] COLUMNS = {ID_COL, TITLE_COL, AUTHOR_COL, DESCRIPTION_COL, COPIES_COL, VOLUME_COL,
+    private static final String[] COLUMNS = {ID_COL, TITLE_COL, AUTHOR_COL, DESCRIPTION_COL, COPIES_COL, LENT_TO_COL,
         CATEGORY_COL, PUBLISHED_DATE_COL, PUBLISHER_COL, PAGES_COL, ISBN_COL, DIGITAL_COL, LENT_COL, READ_COL,
         IMAGE_COL};
     private static volatile BookManager INSTANCE = null;
@@ -54,7 +54,7 @@ public class BookManager {
                 + AUTHOR_COL + " TEXT, "
                 + DESCRIPTION_COL + " TEXT, "
                 + COPIES_COL + " INTEGER, "
-                + VOLUME_COL + " TEXT, "
+                + LENT_TO_COL + " TEXT, "
                 + CATEGORY_COL + " TEXT, "
                 + PUBLISHED_DATE_COL + " TEXT, "
                 + PUBLISHER_COL + " TEXT, "
@@ -87,7 +87,7 @@ public class BookManager {
         Author author = new Author(getStringValue(cursor, AUTHOR_COL));
         String description = getStringValue(cursor, DESCRIPTION_COL);
         int copies = Integer.parseInt(getStringValue(cursor, COPIES_COL).equals("") ? "0" : getStringValue(cursor, COPIES_COL));
-        String volume = getStringValue(cursor, VOLUME_COL);
+        String lentTo = getStringValue(cursor, LENT_TO_COL);
         Category category = new Category(getStringValue(cursor, CATEGORY_COL));
         String publishedDate = getStringValue(cursor, PUBLISHED_DATE_COL);
         String publisher = getStringValue(cursor, PUBLISHER_COL);
@@ -107,7 +107,7 @@ public class BookManager {
         }
         String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_COL));
 
-        return new Book(id, title, author, description, copies, volume, category, publishedDate, publisher,
+        return new Book(id, title, author, description, copies, lentTo, category, publishedDate, publisher,
                 numberOfPages, isbn, digital, lent, read, imagePath);
     }
 
@@ -122,14 +122,14 @@ public class BookManager {
     }
 
     public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description,
-                           String copies, String volume, String publishedDate, int numberOfPages, boolean digital, boolean lent,
+                           String copies, String lentTo, String publishedDate, int numberOfPages, boolean digital, boolean lent,
                            boolean read, String imagePath) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
         values.put(AUTHOR_COL, author);
         values.put(DESCRIPTION_COL, description);
         values.put(COPIES_COL, copies);
-        values.put(VOLUME_COL, volume);
+        values.put(LENT_TO_COL, lentTo);
         values.put(CATEGORY_COL, category);
         values.put(PUBLISHED_DATE_COL, publishedDate);
         values.put(PUBLISHER_COL, publisher);
@@ -144,7 +144,7 @@ public class BookManager {
 
     public void updateBook(SQLiteDatabase db, int id, String updatedTitle, String updatedAuthor,
                            String updatedCategory, String updatedDescription, String updatedCopies,
-                           String updatedVolume, String updatedPublisher, String updatedPublishedDate,
+                           String updatedLentTo, String updatedPublisher, String updatedPublishedDate,
                            int updatedPages,
                            boolean updatedIsDigital, boolean updateIsLent, boolean updateIsRead, String updatedImagePath) {
 
@@ -154,7 +154,7 @@ public class BookManager {
         values.put(AUTHOR_COL, updatedAuthor);
         values.put(DESCRIPTION_COL, updatedDescription);
         values.put(COPIES_COL, updatedCopies);
-        values.put(VOLUME_COL, updatedVolume);
+        values.put(LENT_TO_COL, updatedLentTo);
         values.put(CATEGORY_COL, updatedCategory);
         values.put(PUBLISHED_DATE_COL, updatedPublishedDate);
         values.put(PUBLISHER_COL, updatedPublisher);

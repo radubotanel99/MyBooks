@@ -62,7 +62,7 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
                 i.putExtra(AUTHOR, modal.getAuthor().getName());
                 i.putExtra(DESCRIPTION, modal.getDescription());
                 i.putExtra(COPIES, modal.getCopies());
-                i.putExtra(VOLUME, modal.getVolume());
+                i.putExtra(LENT_TO, modal.getLentTo());
                 i.putExtra(CATEGORY, modal.getCategory().getName());
                 i.putExtra(PUBLISHED_DATE, modal.getPublishedDate());
                 i.putExtra(PUBLISHER, modal.getPublisher());

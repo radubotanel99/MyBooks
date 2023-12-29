@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,7 +39,7 @@ import java.util.Calendar;
 
 public class AddBookActivity extends AbstractActivity {
 
-    private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, copiesEdt, volumeEdt, numberOfPagesEdt;
+    private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, copiesEdt, lentToEdt, numberOfPagesEdt;
     private Spinner categorySpn;
     private CheckBox digitalChk;
     private CheckBox lentChk;
@@ -76,7 +77,7 @@ public class AddBookActivity extends AbstractActivity {
         setupUploadButton();
         initDatePicker();
         initDateButton();
-
+        lentCheckListener();
     }
 
     private void fillFieldsForEditMode() {
@@ -85,11 +86,15 @@ public class AddBookActivity extends AbstractActivity {
         publisherEdt.setText(bookToEdit.getPublisher());
         descriptionEdt.setText(bookToEdit.getDescription());
         copiesEdt.setText(String.valueOf(bookToEdit.getCopies()));
-        volumeEdt.setText(bookToEdit.getVolume());
         numberOfPagesEdt.setText(String.valueOf(bookToEdit.getPages()));
         digitalChk.setChecked(bookToEdit.isDigital());
         lentChk.setChecked(bookToEdit.isLent());
         readChk.setChecked(bookToEdit.isRead());
+
+        lentToEdt.setText(bookToEdit.getLentTo());
+        if (lentChk.isChecked()) {
+            lentToEdt.setVisibility(View.VISIBLE);
+        }
 
         // Set selected category in the spinner
         if (null != bookToEdit.getCategory()) {
@@ -119,7 +124,7 @@ public class AddBookActivity extends AbstractActivity {
         categorySpn = findViewById(R.id.idSpnCategory);
         descriptionEdt = findViewById(R.id.idEdtDescription);
         copiesEdt = findViewById(R.id.idEdtCopies);
-        volumeEdt = findViewById(R.id.idEdtVolume);
+        lentToEdt = findViewById(R.id.idEdtLentTo);
         numberOfPagesEdt = findViewById(R.id.idEdtNumberOfPages);
         digitalChk = findViewById(R.id.idChkDigital);
         lentChk = findViewById(R.id.idChkLent);
@@ -128,6 +133,21 @@ public class AddBookActivity extends AbstractActivity {
         dateButton = findViewById(R.id.datePickerButton);
         bookImage = findViewById(R.id.bookImage);
         uploadImageButton = findViewById(R.id.uploadImageButton);
+
+    }
+
+    private void lentCheckListener() {
+        lentChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    lentToEdt.setVisibility(View.VISIBLE);
+                } else {
+                    lentToEdt.setText("");
+                    lentToEdt.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void initializeDatabase() {
@@ -177,7 +197,7 @@ public class AddBookActivity extends AbstractActivity {
         String description = descriptionEdt.getText().toString();
         String publishedDate = dateButton.getText().toString();
         String copies = copiesEdt.getText().toString();
-        String volume = volumeEdt.getText().toString();
+        String lentTo = lentToEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean digital = digitalChk.isChecked();
         boolean lent = lentChk.isChecked();
@@ -192,7 +212,7 @@ public class AddBookActivity extends AbstractActivity {
             imagePath = addImageToFolder(drawable, title);
         }
 
-        if (isInputInvalid(title, category)) {
+        if (isInputInvalid(title, category, lent, lentTo)) {
             return;
         }
 
@@ -201,7 +221,7 @@ public class AddBookActivity extends AbstractActivity {
             return;
         }
 
-        db.addNewBook(title, author, publisher, category, description, copies, volume, publishedDate, numberOfPages,
+        db.addNewBook(title, author, publisher, category, description, copies, lentTo, publishedDate, numberOfPages,
                     digital, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been added.", Toast.LENGTH_SHORT).show();
         resetFields();
@@ -217,7 +237,7 @@ public class AddBookActivity extends AbstractActivity {
         String description = descriptionEdt.getText().toString();
         String publishedDate = dateButton.getText().toString();
         String copies = copiesEdt.getText().toString();
-        String volume = volumeEdt.getText().toString();
+        String lentTo = lentToEdt.getText().toString();
         int numberOfPages = getNumberOfPages();
         boolean digital = digitalChk.isChecked();
         boolean lent = lentChk.isChecked();
@@ -225,11 +245,11 @@ public class AddBookActivity extends AbstractActivity {
         Drawable drawable = bookImage.getDrawable();
         String imagePath = addImageToFolder(drawable, title);
 
-        if (isInputInvalid(title, category)) {
+        if (isInputInvalid(title, category, lent, lentTo)) {
             return;
         }
 
-        db.updateBook(bookToEdit.getId(), title, author,category, description, copies, volume,  publisher, publishedDate,
+        db.updateBook(bookToEdit.getId(), title, author,category, description, copies, lentTo,  publisher, publishedDate,
                     numberOfPages, digital, lent, read, imagePath);
         Toast.makeText(AddBookActivity.this, "The book has been updated.", Toast.LENGTH_SHORT).show();
         resetFields();
@@ -279,13 +299,18 @@ public class AddBookActivity extends AbstractActivity {
         return numberOfPages;
     }
 
-    private boolean isInputInvalid(String title, String category) {
+    private boolean isInputInvalid(String title, String category, boolean lent, String lentTo) {
         if (title.isEmpty()) {
             Toast.makeText(AddBookActivity.this, "Please enter the title!", Toast.LENGTH_SHORT).show();
             return true;
         }
         if (category.isEmpty() || category.equals(SELECT_CATEGORY)) {
             Toast.makeText(AddBookActivity.this, "Please enter category!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (lent && lentTo.equals("")) {
+            Toast.makeText(AddBookActivity.this, "The book it's lent, please provide the name " +
+                    "of the person who borrowed it ", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -298,7 +323,7 @@ public class AddBookActivity extends AbstractActivity {
         categorySpn.setSelection(0);
         descriptionEdt.setText("");
         copiesEdt.setText("");
-        volumeEdt.setText("");
+        lentToEdt.setText("");
         numberOfPagesEdt.setText("");
         digitalChk.setChecked(false);
         lentChk.setChecked(false);

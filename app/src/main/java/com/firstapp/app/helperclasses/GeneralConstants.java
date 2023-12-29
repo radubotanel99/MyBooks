@@ -10,7 +10,7 @@ public class GeneralConstants {
     public static final String PUBLISHED_DATE = "publishedDate";
     public static final String DESCRIPTION = "description";
     public static final String PAGE_COUNT = "pageCount";
-    public static final String VOLUME = "volume";
+    public static final String LENT_TO = "lentTo";
     public static final String COPIES = "copies";
     public static final String IMAGE_LINK = "imageLinks";
 

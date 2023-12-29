@@ -18,7 +18,7 @@ The My Book Library App is an Android application that allows users to easily ma
 - Delete books from the library.
 - Categorize books into different categories for easy organization.
 - Track lent status to know if a book is lent to somebody or available.
-- Maintain a record of book details like number of copies of a book, volume, published date, and number of pages.
+- Maintain a record of book details like number of copies of a book, published date, and number of pages.
 
 ## Installation
 To install and run the My Book Library App on your Android device, follow these steps:

@@ -3,145 +3,177 @@
     android:layout_height="match_parent"
     android:paddingTop="40dp">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleTextView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="24sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:padding="16dp" />
+        android:layout_height="match_parent"
+        android:paddingBottom="70dp">>
 
-    <!-- ImageView -->
-    <ImageView
-        android:id="@+id/bookImageView"
-        android:layout_below="@id/titleTextView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/no_image"
-        android:padding="16dp"
-    />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <!-- Author -->
-    <TextView
-        android:id="@+id/authorTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bookImageView"
-        android:text="Author"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:padding="16dp" />
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="24sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:padding="16dp" />
 
-    <!-- Description -->
-    <TextView
-        android:id="@+id/descriptionTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/authorTextView"
-        android:text="Description"
-        android:textColor="#000000"
-        android:maxLines="5"
-        android:ellipsize="end"
-        android:scrollbars="vertical"
-        android:padding="16dp" />
 
-    <!-- Copies -->
-    <TextView
-        android:id="@+id/copiesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionTextView"
-        android:text="Nr of copies"
-        android:textColor="#000000"
-        android:padding="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <!-- Volume -->
-    <TextView
-        android:id="@+id/volumeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionTextView"
-        android:layout_toRightOf="@id/copiesTextView"
-        android:text="Volume"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                <!-- ImageView -->
+                <ImageView
+                    android:id="@+id/bookImageView"
+                    android:layout_width="208dp"
+                    android:layout_height="253dp"
+                    android:padding="16dp"
+                    android:src="@drawable/no_image" />
 
-    <!-- Category -->
-    <TextView
-        android:id="@+id/categoryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/copiesTextView"
-        android:text="Category"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    <!-- Published Date -->
-    <TextView
-        android:id="@+id/publishedDateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categoryTextView"
-        android:text="Published Date"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                    <!-- Author -->
+                    <TextView
+                        android:id="@+id/authorTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Author"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
 
-    <!-- Publisher -->
-    <TextView
-        android:id="@+id/publisherTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categoryTextView"
-        android:layout_toRightOf="@id/publishedDateTextView"
-        android:text="Publisher"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                    <!-- Category -->
+                    <TextView
+                        android:id="@+id/categoryTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Category"
+                        android:textColor="#000000" />
 
-    <!-- Number of Pages -->
-    <TextView
-        android:id="@+id/pagesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categoryTextView"
-        android:layout_toRightOf="@id/publisherTextView"
-        android:text="Number of Pages"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                    <!-- Publisher -->
+                    <TextView
+                        android:id="@+id/publisherTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Publisher"
+                        android:textColor="#000000" />
 
-    <!-- Digital -->
-    <TextView
-        android:id="@+id/digitalTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pagesTextView"
-        android:text="eBook"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                    <!-- Number of Pages -->
+                    <TextView
+                        android:id="@+id/pagesTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Number of Pages"
+                        android:textColor="#000000" />
 
-    <!-- Lent -->
-    <TextView
-        android:id="@+id/lentTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pagesTextView"
-        android:layout_toRightOf="@id/digitalTextView"
-        android:text="Lent"
-        android:textColor="#000000"
-        android:padding="16dp" />
+                </LinearLayout>
 
-    <!-- Lent -->
-    <TextView
-        android:id="@+id/readTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pagesTextView"
-        android:layout_toRightOf="@id/lentTextView"
-        android:text="Read"
-        android:textColor="#000000"
-        android:padding="16dp" />
+            </LinearLayout>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#000000"
+                android:maxLines="10"
+                android:ellipsize="end"
+                android:scrollbars="vertical"
+                android:padding="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Published Date -->
+                <TextView
+                    android:id="@+id/publishedDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Published Date"
+                    android:textColor="#000000"
+                    android:padding="16dp" />
+
+                <!-- Copies -->
+                <TextView
+                    android:id="@+id/copiesTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Nr of copies"
+                    android:textColor="#000000" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Lent -->
+                    <TextView
+                        android:id="@+id/lentTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lent"
+                        android:textColor="#000000"
+                        android:padding="16dp" />
+
+                    <!-- Lent to -->
+                    <TextView
+                        android:id="@+id/lentToTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Lent to"
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+
+                <!-- Digital -->
+                <TextView
+                    android:id="@+id/digitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="eBook"
+                    android:textColor="#000000"
+                    android:padding="16dp" />
+
+                <!-- Read -->
+                <TextView
+                    android:id="@+id/readTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Read"
+                    android:textColor="#000000"
+                    android:padding="16dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <ImageButton
         android:id="@+id/deleteBookButton"

@@ -9,7 +9,7 @@ public class Book implements Serializable {
     private Author author;
     private String description;
     private int copies;
-    private String volume;
+    private String lentTo;
     private Category category;
     private String publishedDate;
     private String publisher;
@@ -28,7 +28,7 @@ public class Book implements Serializable {
         this.category = category;
     }
 
-    public Book(int id, String title, Author author, String description, int copies, String volume, Category category,
+    public Book(int id, String title, Author author, String description, int copies, String lentTo, Category category,
                 String publishedDate, String publisher, int pages, String ISBN, boolean digital, boolean lent,
                 boolean read, String imagePath) {
         this.id = id;
@@ -36,7 +36,7 @@ public class Book implements Serializable {
         this.author = author;
         this.description = description;
         this.copies = copies;
-        this.volume = volume;
+        this.lentTo = lentTo;
         this.category = category;
         this.publishedDate = publishedDate;
         this.publisher = publisher;
@@ -88,12 +88,12 @@ public class Book implements Serializable {
         this.copies = copies;
     }
 
-    public String getVolume() {
-        return volume;
+    public String getLentTo() {
+        return lentTo;
     }
 
-    public void setVolume(String volume) {
-        this.volume = volume;
+    public void setLentTo(String lentTo) {
+        this.lentTo = lentTo;
     }
 
     public Category getCategory() {
