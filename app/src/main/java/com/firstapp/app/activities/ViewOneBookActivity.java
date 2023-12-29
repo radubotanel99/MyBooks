@@ -88,8 +88,8 @@ public class ViewOneBookActivity extends AbstractActivity {
 
     private void displayBookInformation() {
         titleTextView.setText(title == null || title.isEmpty() ? "N/A" : title);
-        authorTextView.setText(author == null || author.isEmpty() ? "N/A" : author);
-        descriptionTextView.setText(description == null || description.isEmpty() ? "N/A" : description);
+        authorTextView.setText(author == null || author.isEmpty() ? "No author" : author);
+        descriptionTextView.setText(description == null || description.isEmpty() ? "No description" : description);
         copiesTextView.setText("Nr of copies: " + copies);
         categoryTextView.setText("Category: " + (category == null || category.isEmpty() ? "N/A" : category));
         publishedDateTextView.setText("Published Date:\n" + (publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate));

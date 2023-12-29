@@ -25,4 +25,7 @@ public class GeneralConstants {
     public static final String IMAGE = "image";
 
     public static final String SELECT_CATEGORY = "Select category...";
+
+    public static final String BOOK_TABLE = "book";
+    public static final String CATEGORY_TABLE = "category";
 }

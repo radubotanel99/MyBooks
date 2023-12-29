@@ -1,5 +1,6 @@
 package com.firstapp.app.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,7 +46,6 @@ public class BookManager {
         }
         return INSTANCE;
     }
-
 
     public String createTable() {
         return "CREATE TABLE " + TABLE_NAME + " ("
@@ -215,5 +215,62 @@ public class BookManager {
             book = createBookFromCursor(cursor);
         }
         return book;
+    }
+
+    public ArrayList<String> getAuthors(SQLiteDatabase db) {
+        ArrayList<String> authorsList = new ArrayList<>();
+        String query = "SELECT DISTINCT " + AUTHOR_COL + " FROM " + TABLE_NAME + " order by " + AUTHOR_COL;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String author = cursor.getString(cursor.getColumnIndex(AUTHOR_COL));
+                authorsList.add(author);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return authorsList;
+    }
+
+    public ArrayList<Book> getFilteredBooks(SQLiteDatabase db, boolean authorFilterIsChecked, boolean categoryFilterIsChecked,
+                                            boolean readFilterIsChecked, boolean lentFilterIsChecked, boolean readRdBtnChecked,
+                                            boolean lentRdBtnChecked, String authorSelected, String categorySelected) {
+
+        ArrayList<Book> filteredBooks = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT * FROM book WHERE 1 = 1 ");
+        if (authorFilterIsChecked) {
+            query.append("AND author = '").append(authorSelected).append("' ");
+        }
+
+        if (categoryFilterIsChecked) {
+            query.append("AND category = '").append(categorySelected).append("' ");
+        }
+
+        if (readFilterIsChecked) {
+            int readValue = readRdBtnChecked ? 1 : 0;
+            query.append("AND read = ").append(readValue).append(" ");
+        }
+
+        if (lentFilterIsChecked) {
+            int lentValue = lentRdBtnChecked ? 1 : 0;
+            query.append("AND lent = ").append(lentValue).append(" ");
+        }
+
+        query.append("order by " + TITLE_COL);
+
+        Cursor cursor = db.rawQuery(query.toString(), null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                // Retrieve book details from the cursor and add to filteredBooks list
+                // Assuming Book class has a constructor to initialize with cursor values
+                Book book = createBookFromCursor(cursor);
+                filteredBooks.add(book);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return filteredBooks;
+
     }
 }

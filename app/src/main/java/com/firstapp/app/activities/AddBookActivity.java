@@ -41,9 +41,7 @@ public class AddBookActivity extends AbstractActivity {
 
     private EditText titleEdt, authorEdt, publisherEdt, descriptionEdt, copiesEdt, lentToEdt, numberOfPagesEdt;
     private Spinner categorySpn;
-    private CheckBox digitalChk;
-    private CheckBox lentChk;
-    private CheckBox readChk;
+    private CheckBox digitalChk, lentChk, readChk;
     private Button addBookBtn;
     private Database db;
     private DatePickerDialog datePickerDialog;

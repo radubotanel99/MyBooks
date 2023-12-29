@@ -83,6 +83,11 @@ public class Database extends SQLiteOpenHelper {
         return categoryManager.allCategories(db);
     }
 
+    public ArrayList<String> getAuthors() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return bookManager.getAuthors(db);
+    }
+
     public void addNewBook(String title, String author, String publisher, String category,
                            String description, String copies, String lentTo,
                            String publishedDate, int numberOfPages, boolean digital, boolean lent,
@@ -169,8 +174,17 @@ public class Database extends SQLiteOpenHelper {
 
     public void alterDatabase() {
 //        SQLiteDatabase db = getWritableDatabase();
+//        db.execSQL("DELETE FROM book WHERE id is NULL");
 //        String sql = "ALTER TABLE book ADD COLUMN read INTEGER DEFAULT 0;";
 //        db.execSQL(sql);
 //        db.close();
+    }
+
+    public ArrayList<Book> getFilteredBooks(boolean authorFilterIsChecked, boolean categoryFilterIsChecked,
+                                            boolean readFilterIsChecked, boolean lentFilterIsChecked, boolean readRdBtnChecked,
+                                            boolean lentRdBtnChecked, String authorSelected, String categorySelected) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return bookManager.getFilteredBooks(db, authorFilterIsChecked, categoryFilterIsChecked, readFilterIsChecked,
+                lentFilterIsChecked, readRdBtnChecked, lentRdBtnChecked, authorSelected, categorySelected);
     }
 }
