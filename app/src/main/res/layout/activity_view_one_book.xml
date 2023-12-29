@@ -51,6 +51,7 @@
                         android:padding="16dp"
                         android:text="Author"
                         android:textColor="#000000"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <!-- Category -->
@@ -145,7 +146,9 @@
                         android:id="@+id/lentToTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:paddingTop="0dp"
+                        android:paddingLeft="16dp"
+                        android:paddingBottom="16dp"
                         android:text="Lent to"
                         android:textColor="#000000" />
 

@@ -93,8 +93,8 @@ public class ViewOneBookActivity extends AbstractActivity {
         copiesTextView.setText("Nr of copies: " + copies);
         categoryTextView.setText("Category: " + (category == null || category.isEmpty() ? "N/A" : category));
         publishedDateTextView.setText("Published Date:\n" + (publishedDate == null || publishedDate.isEmpty() ? "N/A" : publishedDate));
-        publisherTextView.setText("Publisher:" + (publisher == null || publisher.isEmpty() ? "N/A" : publisher));
-        pagesTextView.setText("Nr of pages:" + (pages == 0 ? "N/A" : String.valueOf(pages)));
+        publisherTextView.setText("Publisher: " + (publisher == null || publisher.isEmpty() ? "N/A" : publisher));
+        pagesTextView.setText("Nr of pages: " + (pages == 0 ? "N/A" : String.valueOf(pages)));
         digitalTextView.setText(isDigital ? "eBook" : "Physical Book");
         lentTextView.setText(isLent ? "Lent" : "Not Lent");
         if (lentTextView.getText().equals("Lent")) {

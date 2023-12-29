@@ -55,7 +55,7 @@ public class GoogleAPIRequest {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray itemsArray = response.getJSONArray(ITEMS);
-                    for (int i=0; i<itemsArray.length(); i++) {
+                    for (int i=itemsArray.length()-1; i>=0; i--) {
                         JSONObject itemsObj = itemsArray.getJSONObject(i);
                         JSONObject volumeObj = itemsObj.getJSONObject(BOOKS_INFO);
                         String title = getPropertyFromJSON(volumeObj, TITLE);
@@ -139,7 +139,7 @@ public class GoogleAPIRequest {
     private void alertDialogNoBookFound() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Sorry, we didn't find a book with that ISBN. You have to add the book manually")
-                .setPositiveButton("OK", null); // null OnClickListener
+                .setPositiveButton("OK", null);
 
         AlertDialog dialog = builder.create();
         dialog.show();
