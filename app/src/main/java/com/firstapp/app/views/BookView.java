@@ -49,6 +49,8 @@ public class BookView extends RecyclerView.Adapter<BookView.ViewHolder>{
             String imagePath = modal.getImagePath();
             Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
             holder.imageView.setImageBitmap(imageBitmap);
+        } else {
+            holder.imageView.setImageResource(R.drawable.no_image);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

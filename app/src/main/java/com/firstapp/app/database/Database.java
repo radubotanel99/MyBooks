@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "library";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
 
     private CategoryManager categoryManager = CategoryManager.getInstance();
     private BookManager bookManager = BookManager.getInstance();
@@ -52,15 +52,15 @@ public class Database extends SQLiteOpenHelper {
                         " borrowed AS digital, lent, read, image FROM book;");
                 db.execSQL("DROP TABLE book;");
                 db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+
+                db.execSQL(bookManager.createVirtualTable());
+                db.execSQL(bookManager.insertInVirtualTable());
+                db.execSQL("DROP TABLE book");
+                db.execSQL("ALTER TABLE new_book RENAME TO book;");
+
                 db.execSQL("UPDATE book SET copies=1");
                 break;
-            case 6:
-                db.execSQL("DELETE FROM book WHERE id is NULL");
-                db.execSQL("CREATE TABLE new_table_name AS SELECT id, title, author," +
-                        " description, copies, volume AS lentTo, category, published_date, publisher, pages, isbn, " +
-                        " digital, lent, read, image FROM book;");
-                db.execSQL("DROP TABLE book;");
-                db.execSQL("ALTER TABLE new_table_name RENAME TO book;");
+            case 8:
                 break;
         }
 //        dropTables(db);

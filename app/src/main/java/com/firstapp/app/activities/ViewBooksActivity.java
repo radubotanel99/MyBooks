@@ -175,5 +175,10 @@ public class ViewBooksActivity extends AbstractActivity implements FilterListene
                 readRdBtnChecked, lentRdBtnChecked, authorSelected, categorySelected);
 
         filterBooks(String.valueOf(searchEditText.getText()));
+        if (authorFilterIsChecked || categoryFilterIsChecked || readFilterIsChecked || lentFilterIsChecked) {
+            filterButton.setImageResource(R.drawable.filterapplied);
+        } else {
+            filterButton.setImageResource(R.drawable.filter);
+        }
     }
 }

@@ -271,6 +271,61 @@ public class BookManager {
         }
 
         return filteredBooks;
-
     }
+
+
+    public String createVirtualTable() {
+        return "CREATE TABLE " + "new_book" + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TITLE_COL + " TEXT, "
+                + AUTHOR_COL + " TEXT, "
+                + DESCRIPTION_COL + " TEXT, "
+                + COPIES_COL + " INTEGER, "
+                + LENT_TO_COL + " TEXT, "
+                + CATEGORY_COL + " TEXT, "
+                + PUBLISHED_DATE_COL + " TEXT, "
+                + PUBLISHER_COL + " TEXT, "
+                + PAGES_COL + " INTEGER, "
+                + ISBN_COL + " TEXT, "
+                + DIGITAL_COL + " INTEGER, "
+                + LENT_COL + " INTEGER, "
+                + READ_COL + " INTEGER, "
+                + IMAGE_COL + " TEXT, "
+                + "FOREIGN KEY (" + CATEGORY_COL + ") REFERENCES category (id) )";
+    }
+
+    public String insertInVirtualTable() {
+        return "INSERT INTO new_book (" +
+                TITLE_COL + ", "
+                + AUTHOR_COL + ", "
+                + DESCRIPTION_COL + ", "
+                + COPIES_COL + ", "
+                + LENT_TO_COL + ", "
+                + CATEGORY_COL + ", "
+                + PUBLISHED_DATE_COL + ", "
+                + PUBLISHER_COL + ", "
+                + PAGES_COL + ", "
+                + ISBN_COL + ", "
+                + DIGITAL_COL + ", "
+                + LENT_COL + ", "
+                + READ_COL + ", "
+                + IMAGE_COL +
+                ") SELECT " +
+                TITLE_COL + ", "
+                + AUTHOR_COL + ", "
+                + DESCRIPTION_COL + ", "
+                + COPIES_COL + ", "
+                + LENT_TO_COL + ", "
+                + CATEGORY_COL + ", "
+                + PUBLISHED_DATE_COL + ", "
+                + PUBLISHER_COL + ", "
+                + PAGES_COL + ", "
+                + ISBN_COL + ", "
+                + DIGITAL_COL + ", "
+                + LENT_COL + ", "
+                + READ_COL + ", "
+                + IMAGE_COL +
+                " FROM " + TABLE_NAME;
+    }
+
 }
