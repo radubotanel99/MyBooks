@@ -248,7 +248,7 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
                         checkLentStatus.isChecked() && lentRdBtn.isChecked(), (String) authorSpn.getSelectedItem(),
                         (String) categorySpn.getSelectedItem());
                 if (checkAuthor.isChecked() || checkCategory.isChecked() || checkReadStatus.isChecked() || checkLentStatus.isChecked()) {
-                    Toast.makeText(context, "Filters where applied successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Filters were applied successfully!", Toast.LENGTH_SHORT).show();
                 }
                 dismiss();
             }
