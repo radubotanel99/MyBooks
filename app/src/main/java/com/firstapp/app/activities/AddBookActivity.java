@@ -56,6 +56,12 @@ public class AddBookActivity extends AbstractActivity {
 
     private Uri imageUri;
 
+    private int idBook;
+    private String title, author, description, lentTo, category, publishedDate, publisher;
+    private int copies, pages;
+    private boolean isDigital, isLent, isRead;
+    private String imagePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +76,29 @@ public class AddBookActivity extends AbstractActivity {
             bookToEdit = (Book) intent.getSerializableExtra(BOOK_TO_EDIT);
             fillFieldsForEditMode();
         }
+//        if (intent != null && intent.hasExtra(ID)) {
+//            isEditMode = true;
+//            //int id, String title, Author author, String publisher, Category category
+//            idBook = getIntent().getIntExtra(ID, 0);
+//            title = getIntent().getStringExtra(TITLE);
+//            author = getIntent().getStringExtra(AUTHOR);
+//            description = getIntent().getStringExtra(DESCRIPTION);
+//            copies = getIntent().getIntExtra(COPIES, 0);
+//            lentTo = getIntent().getStringExtra(LENT_TO);
+//            category = getIntent().getStringExtra(CATEGORY);
+//            publishedDate = getIntent().getStringExtra(PUBLISHED_DATE);
+//            publisher = getIntent().getStringExtra(PUBLISHER);
+//            pages = getIntent().getIntExtra(PAGE_COUNT, 0);
+//            isDigital = getIntent().getBooleanExtra(IS_DIGITAL, false);
+//            isLent = getIntent().getBooleanExtra(IS_LENT, false);
+//            isRead = getIntent().getBooleanExtra(IS_READ, false);
+//            imagePath = getIntent().getStringExtra(IMAGE);
+//            bookToEdit = new Book(idBook, title, new Author(author), description, copies, lentTo,
+//                    new Category(category), publishedDate, publisher, pages, "", isDigital,
+//                    isLent, isRead, imagePath);
+//            fillFieldsForEditMode();
+//        }
+
 
         setupAddBookButton();
         setupUploadButton();
@@ -104,11 +133,11 @@ public class AddBookActivity extends AbstractActivity {
 
         String imagePath = bookToEdit.getImagePath();
         if (null != imagePath) {
-            try {
-                Thread.sleep(4000); // it's needed to save the image first, then show it in view
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(4000); // it's needed to save the image first, then show it in view
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
             bookImage.setImageBitmap(imageBitmap);
             bookImage.setImageURI(Uri.parse(imagePath));
@@ -194,9 +223,9 @@ public class AddBookActivity extends AbstractActivity {
         String category = categorySpn.getSelectedItem().toString();
         String description = descriptionEdt.getText().toString();
         String publishedDate = dateButton.getText().toString();
-        String copies = copiesEdt.getText().toString();
+        int copies = getIntFromEdtTxt(copiesEdt);
         String lentTo = lentToEdt.getText().toString();
-        int numberOfPages = getNumberOfPages();
+        int numberOfPages = getIntFromEdtTxt(numberOfPagesEdt);
         boolean digital = digitalChk.isChecked();
         boolean lent = lentChk.isChecked();
         boolean read = readChk.isChecked();
@@ -214,7 +243,7 @@ public class AddBookActivity extends AbstractActivity {
             return;
         }
 
-        if (db.getDuplicate(title, author, publisher, publishedDate) != null) {
+        if (db.getDuplicate(title, author, publisher, numberOfPages) != null) {
             Toast.makeText(AddBookActivity.this, "You already have this book!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -236,7 +265,7 @@ public class AddBookActivity extends AbstractActivity {
         String publishedDate = dateButton.getText().toString();
         String copies = copiesEdt.getText().toString();
         String lentTo = lentToEdt.getText().toString();
-        int numberOfPages = getNumberOfPages();
+        int numberOfPages = getIntFromEdtTxt(numberOfPagesEdt);
         boolean digital = digitalChk.isChecked();
         boolean lent = lentChk.isChecked();
         boolean read = readChk.isChecked();
@@ -287,14 +316,14 @@ public class AddBookActivity extends AbstractActivity {
         }
     }
 
-    private int getNumberOfPages() {
-        int numberOfPages;
+    private int getIntFromEdtTxt(EditText editText) {
+        int number;
         try {
-            numberOfPages = Integer.parseInt(numberOfPagesEdt.getText().toString());
+            number = Integer.parseInt(editText.getText().toString());
         } catch (NumberFormatException e) {
-            numberOfPages = 0;
+            number = 1;
         }
-        return numberOfPages;
+        return number;
     }
 
     private boolean isInputInvalid(String title, String category, boolean lent, String lentTo) {

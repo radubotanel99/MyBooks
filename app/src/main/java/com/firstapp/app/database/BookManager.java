@@ -122,7 +122,7 @@ public class BookManager {
     }
 
     public void addNewBook(SQLiteDatabase db, String title, String author, String publisher, String category, String description,
-                           String copies, String lentTo, String publishedDate, int numberOfPages, boolean digital, boolean lent,
+                           int copies, String lentTo, String publishedDate, int numberOfPages, boolean digital, boolean lent,
                            boolean read, String imagePath) {
         ContentValues values = new ContentValues();
         values.put(TITLE_COL, title);
@@ -206,10 +206,10 @@ public class BookManager {
         return count;
     }
 
-    public Book getDuplicate(SQLiteDatabase db, String title, String author, String publisher, String publishedDate) {
+    public Book getDuplicate(SQLiteDatabase db, String title, String author, String publisher, int pageCount) {
         Book book = null;
-        String selection = TITLE_COL + " = ? AND " + AUTHOR_COL + " = ? AND " + PUBLISHER_COL +  " = ? AND " + PUBLISHED_DATE_COL + " = ?";
-        String[] selectionArgs = {title, author, publisher, publishedDate};
+        String selection = TITLE_COL + " = ? AND " + AUTHOR_COL + " = ? AND " + PUBLISHER_COL +  " = ? AND " + PAGES_COL + " = ?";
+        String[] selectionArgs = {title, author, publisher, String.valueOf(pageCount)};
         Cursor cursor = db.query(TABLE_NAME, COLUMNS, selection, selectionArgs, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             book = createBookFromCursor(cursor);

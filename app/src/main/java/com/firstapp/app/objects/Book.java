@@ -20,6 +20,10 @@ public class Book implements Serializable {
     private boolean read;
     private String imagePath;
 
+    public Book() {
+
+    }
+
     public Book(int id, String title, Author author, String publisher, Category category) {
         this.id = id;
         this.title = title;

@@ -27,6 +27,7 @@ public class AdministrationActivity extends AbstractActivity {
     private Button addCategoryBtn;
     private Button allCategoriesBtn;
     private Button statsBtn;
+    private Button importExportBtn;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,6 +74,14 @@ public class AdministrationActivity extends AbstractActivity {
                 openStatsActivity();
             }
         });
+
+        importExportBtn = (Button) findViewById(R.id.importExportBtn);
+        importExportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImportExportActivity();
+            }
+        });
     }
 
     public void openMyBooksActivity() {
@@ -104,5 +113,11 @@ public class AdministrationActivity extends AbstractActivity {
         int x = 2;
         // we are here, nothing to do...
     }
+
+    private void openImportExportActivity() {
+        Intent intent = new Intent(this, ImportExportActivity.class);
+        startActivity(intent);
+    }
+
 
 }

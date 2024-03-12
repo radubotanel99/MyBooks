@@ -127,7 +127,7 @@ public class ViewOneBookActivity extends AbstractActivity {
                         if (imageFileToDelete.exists()) {
                             imageFileToDelete.delete();
                         }
-                        Toast.makeText(ViewOneBookActivity.this, "Book has been deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ViewOneBookActivity.this, "The book has been deleted", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(ViewOneBookActivity.this, ViewBooksActivity.class);
                         startActivity(i);
                     }
@@ -144,13 +144,29 @@ public class ViewOneBookActivity extends AbstractActivity {
         editBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
+                Intent i = new Intent(ViewOneBookActivity.this, AddBookActivity.class);
 
                 Book bookToEdit = new Book(idBook, title, new Author(author), description, copies, lentTo,
                         new Category(category), publishedDate, publisher, pages, "", isDigital,
                         isLent, isRead, imagePath);
-                intent.putExtra(BOOK_TO_EDIT, bookToEdit);
-                startActivity(intent);
+
+//                i.putExtra(ID, bookToEdit.getId());
+//                i.putExtra(TITLE, bookToEdit.getTitle());
+//                i.putExtra(AUTHOR, bookToEdit.getAuthor().getName());
+//                i.putExtra(DESCRIPTION, bookToEdit.getDescription());
+//                i.putExtra(COPIES, bookToEdit.getCopies());
+//                i.putExtra(LENT_TO, bookToEdit.getLentTo());
+//                i.putExtra(CATEGORY, bookToEdit.getCategory().getName());
+//                i.putExtra(PUBLISHED_DATE, bookToEdit.getPublishedDate());
+//                i.putExtra(PUBLISHER, bookToEdit.getPublisher());
+//                i.putExtra(PAGE_COUNT, bookToEdit.getPages());
+//                i.putExtra(IS_DIGITAL, bookToEdit.isDigital());
+//                i.putExtra(IS_LENT, bookToEdit.isLent());
+//                i.putExtra(IS_READ, bookToEdit.isRead());
+//                i.putExtra(IMAGE, bookToEdit.getImagePath());
+
+                i.putExtra(BOOK_TO_EDIT, bookToEdit);
+                startActivity(i);
             }
         });
     }

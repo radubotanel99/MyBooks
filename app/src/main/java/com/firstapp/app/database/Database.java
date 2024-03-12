@@ -89,7 +89,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void addNewBook(String title, String author, String publisher, String category,
-                           String description, String copies, String lentTo,
+                           String description, int copies, String lentTo,
                            String publishedDate, int numberOfPages, boolean digital, boolean lent,
                            boolean read, String imagePath) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -167,9 +167,9 @@ public class Database extends SQLiteOpenHelper {
         return bookManager.getBooksLentNumber(db);
     }
 
-    public Book getDuplicate(String title, String author, String publisher, String publishedDate) {
+    public Book getDuplicate(String title, String author, String publisher, int pageCount) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return bookManager.getDuplicate(db, title, author, publisher, publishedDate);
+        return bookManager.getDuplicate(db, title, author, publisher, pageCount);
     }
 
     public void alterDatabase() {
