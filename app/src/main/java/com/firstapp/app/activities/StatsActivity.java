@@ -28,8 +28,17 @@ public class StatsActivity extends AbstractActivity {
 
         db = Database.getInstance(StatsActivity.this);
 
-        booksCountTextView.setText("Total number of your books: " + String.valueOf(db.getBooksNUmber()));
-        booksReadCountTextView.setText("You have read " + String.valueOf(db.getBooksReadNumber()) + " of them until now.");
+        int booksNumber = db.getBooksNUmber();
+        int readBooks = db.getBooksReadNumber();
+
+//        int percentOfReadBooks = booksNumber > 0 ? (readBooks / booksNumber) * 100 : 0;
+        int percentOfReadBooks = 0;
+        if (booksNumber > 0) {
+            percentOfReadBooks = (readBooks * 100) / booksNumber;
+        }
+
+        booksCountTextView.setText("Total number of your books: " + String.valueOf(booksNumber));
+        booksReadCountTextView.setText("You have read " + String.valueOf(readBooks) + " of them until now (" + String.valueOf(percentOfReadBooks) + "%).");
         booksDigitalCountTextView.setText("Number of eBooks: " + String.valueOf(db.getBooksDigitalNumber()));
         booksLentCountTextView.setText("Number of books lent: " + String.valueOf(db.getBooksLentNumber()));
 
