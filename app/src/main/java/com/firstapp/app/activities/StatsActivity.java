@@ -8,6 +8,10 @@ import android.widget.TextView;
 import com.firstapp.app.R;
 import com.firstapp.app.database.Database;
 
+import org.eazegraph.lib.charts.PieChart;
+
+import java.util.ArrayList;
+
 public class StatsActivity extends AbstractActivity {
 
     private TextView booksCountTextView;
@@ -41,6 +45,8 @@ public class StatsActivity extends AbstractActivity {
         booksReadCountTextView.setText("You have read " + String.valueOf(readBooks) + " of them until now (" + String.valueOf(percentOfReadBooks) + "%).");
         booksDigitalCountTextView.setText("Number of eBooks: " + String.valueOf(db.getBooksDigitalNumber()));
         booksLentCountTextView.setText("Number of books lent: " + String.valueOf(db.getBooksLentNumber()));
+
+
 
     }
 }
