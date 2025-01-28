@@ -3,10 +3,12 @@ package com.firstapp.app.activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.view.View;
@@ -28,12 +30,14 @@ public class AdministrationActivity extends AbstractActivity {
     private Button allCategoriesBtn;
     private Button statsBtn;
     private Button importExportBtn;
+    private TextView titleTextView;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administration);
+
 
         myBooksBtn = (Button) findViewById(R.id.myBooksBtn);
         myBooksBtn.setOnClickListener(new View.OnClickListener() {
