@@ -10,8 +10,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -159,8 +161,17 @@ public class AddBookActivity extends AbstractActivity {
         addBookBtn = findViewById(R.id.idBtnAddBook);
         dateButton = findViewById(R.id.datePickerButton);
         bookImage = findViewById(R.id.bookImage);
+        desingBookImage();
         uploadImageButton = findViewById(R.id.uploadImageButton);
 
+    }
+    private void desingBookImage() {
+        GradientDrawable border = new GradientDrawable();
+        border.setShape(GradientDrawable.RECTANGLE);
+        border.setColor(Color.TRANSPARENT); // Background color
+        border.setStroke(4, Color.BLACK); // Border width and color
+        border.setCornerRadius(16); // Optional: Rounded corners
+        bookImage.setBackground(border);
     }
 
     private void lentCheckListener() {
