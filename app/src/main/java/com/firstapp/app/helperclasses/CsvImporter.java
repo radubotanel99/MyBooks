@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class CsvImporter {
-    private static final int REQUEST_PERMISSION = 100;
     private static final int PICK_CSV_FILE = 101;
 
     private Database db;
@@ -35,18 +34,7 @@ public class CsvImporter {
         this.activity = activity;
     }
 
-    public void checkPermissionAndOpenFilePicker() {
-        if (ContextCompat.checkSelfPermission(this.activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.activity,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION);
-        } else {
-            openFilePicker();
-        }
-    }
-
-    private void openFilePicker() {
+    public void openFilePicker() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 //        intent.setType("*/*"); // Allow all file types

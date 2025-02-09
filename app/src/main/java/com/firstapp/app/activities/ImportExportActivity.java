@@ -1,6 +1,9 @@
 package com.firstapp.app.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +26,8 @@ public class ImportExportActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_export);
 
+        requestStoragePermissions();
+
         db = Database.getInstance(this);
         importer = new CsvImporter(db, ImportExportActivity.this );
 
@@ -41,7 +46,7 @@ public class ImportExportActivity extends AbstractActivity {
             @Override
             public void onClick(View view) {
 //                CsvImporter importer = new CsvImporter(db, ImportExportActivity.this );
-                importer.checkPermissionAndOpenFilePicker();
+                importer.openFilePicker();
             }
         });
     }
@@ -50,5 +55,17 @@ public class ImportExportActivity extends AbstractActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         importer.onActivityResult(this, requestCode, resultCode, data);
+    }
+
+    private void requestStoragePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                }, 1);
+            }
+        }
     }
 }

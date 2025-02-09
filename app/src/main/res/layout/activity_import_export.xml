@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,35 +8,43 @@
     android:background="@drawable/settings"
     tools:context=".activities.ImportExportActivity">
 
-    <Button
-        android:id="@+id/importBtn"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="165dp"
-        android:layout_marginBottom="141dp"
-        android:backgroundTint="@android:color/white"
-        android:text="Import from csv file"
+        android:text="Settings"
         android:textColor="#000000"
+        android:textSize="50dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exportBtn" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.195" />
 
     <Button
         android:id="@+id/exportBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="480dp"
-        android:layout_marginEnd="187dp"
-        android:layout_marginBottom="14dp"
         android:backgroundTint="@android:color/white"
-        android:text="export to csv file"
+        android:text="Export to CSV File"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/importBtn"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/importBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@android:color/white"
+        android:text="Import from CSV File"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exportBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

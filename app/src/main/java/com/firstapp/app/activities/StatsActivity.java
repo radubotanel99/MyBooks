@@ -41,12 +41,9 @@ public class StatsActivity extends AbstractActivity {
             percentOfReadBooks = (readBooks * 100) / booksNumber;
         }
 
-        booksCountTextView.setText("Total number of your books: " + String.valueOf(booksNumber));
-        booksReadCountTextView.setText("You have read " + String.valueOf(readBooks) + " of them until now (" + String.valueOf(percentOfReadBooks) + "%).");
-        booksDigitalCountTextView.setText("Number of eBooks: " + String.valueOf(db.getBooksDigitalNumber()));
-        booksLentCountTextView.setText("Number of books lent: " + String.valueOf(db.getBooksLentNumber()));
-
-
-
+        booksCountTextView.setText("Total number of books: " + String.valueOf(booksNumber));
+        booksReadCountTextView.setText("Total number of read books " + String.valueOf(readBooks) + " (" + String.valueOf(percentOfReadBooks) + "%).");
+        booksDigitalCountTextView.setText("Total number of eBooks: " + String.valueOf(db.getBooksDigitalNumber()));
+        booksLentCountTextView.setText("Total number of lent books: " + String.valueOf(db.getBooksLentNumber()));
     }
 }

@@ -208,8 +208,15 @@ public class BookManager {
 
     public Book getDuplicate(SQLiteDatabase db, String title, String author, String publisher, int pageCount) {
         Book book = null;
-        String selection = TITLE_COL + " = ? AND " + AUTHOR_COL + " = ? AND " + PUBLISHER_COL +  " = ? AND " + PAGES_COL + " = ?";
+
+        String selection = TITLE_COL + " = ? AND " + AUTHOR_COL + " = ? AND " + PUBLISHER_COL + " = ? AND " + PAGES_COL + " = ?";
         String[] selectionArgs = {title, author, publisher, String.valueOf(pageCount)};
+
+        if (publisher == null) {
+            selection = TITLE_COL + " = ? AND " + AUTHOR_COL + " = ? AND " + PAGES_COL + " = ?";
+            selectionArgs = new String[]{title, author, String.valueOf(pageCount)};
+        }
+
         Cursor cursor = db.query(TABLE_NAME, COLUMNS, selection, selectionArgs, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             book = createBookFromCursor(cursor);
